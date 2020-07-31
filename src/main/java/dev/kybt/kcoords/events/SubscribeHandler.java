@@ -23,7 +23,7 @@ public class SubscribeHandler implements GlobalVars {
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent event) {
         if(!KybtCoords.isEnabled) return;
-        if(event.type != RenderGameOverlayEvent.ElementType.HOTBAR || minecraft.gameSettings.showDebugInfo) return;
+        if(event.type != RenderGameOverlayEvent.ElementType.HOTBAR || minecraft.gameSettings.showDebugInfo || event.isCancelable()) return;
 
         renderData();
 //        updateRenders();
