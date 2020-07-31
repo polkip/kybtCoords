@@ -54,33 +54,33 @@ public class SubscribeHandler implements GlobalVars {
 
         GlStateManager.pushMatrix();
 
-        RenderHelper.drawText("X: ", KybtCoords.positionX + 1, lineX, Utils.Colors.LIGHT_GRAY, scale);
-        RenderHelper.drawText("Y: ", KybtCoords.positionX + 1, lineY, Utils.Colors.LIGHT_GRAY, scale);
-        RenderHelper.drawText("Z: ", KybtCoords.positionX + 1, lineZ, Utils.Colors.LIGHT_GRAY, scale);
-        RenderHelper.drawText("C: ", KybtCoords.positionX + 1, lineC, Utils.Colors.LIGHT_GRAY, scale);
-        RenderHelper.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, Utils.Colors.LIGHT_GRAY, scale);
-        RenderHelper.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, Utils.Colors.LIGHT_GRAY, scale);
+        RenderHelper.drawText("X: ", KybtCoords.positionX + 1, lineX, Utils.Colors.LIGHT_GRAY, scale, false);
+        RenderHelper.drawText("Y: ", KybtCoords.positionX + 1, lineY, Utils.Colors.LIGHT_GRAY, scale, false);
+        RenderHelper.drawText("Z: ", KybtCoords.positionX + 1, lineZ, Utils.Colors.LIGHT_GRAY, scale, false);
+        RenderHelper.drawText("C: ", KybtCoords.positionX + 1, lineC, Utils.Colors.LIGHT_GRAY, scale, false);
+        RenderHelper.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, Utils.Colors.LIGHT_GRAY, scale, false);
+        RenderHelper.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, Utils.Colors.LIGHT_GRAY, scale, false);
 
         RenderHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("X: ", scale), lineX, Utils.Colors.WHITE, scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("X: ", scale), lineX, Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Y: ", scale), lineY, Utils.Colors.WHITE, scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Y: ", scale), lineY, Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Z: ", scale), lineZ, Utils.Colors.WHITE, scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Z: ", scale), lineZ, Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText("" + Utils.fetchCCounter(),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("C: ", scale), lineC, Utils.Colors.WHITE, scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("C: ", scale), lineC, Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText("" + Utils.fetchBiomeName(playerLocation),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale, false);
         RenderHelper.drawText("" + minecraft.debug.split(" ")[0],
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("FPS: ", scale), lineFPS, Utils.Colors.WHITE, scale);
+                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("FPS: ", scale), lineFPS, Utils.Colors.WHITE, scale, false);
 
         RenderHelper.drawText(xDirection, KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(xDirection, scale), lineX,
-                Utils.Colors.WHITE, 0.75D);
+                Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText(Utils.DIRECTIONS[Utils.getDirection()],
                 KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), lineY,
-                Utils.Colors.WHITE, 0.75D);
+                Utils.Colors.WHITE, scale, false);
         RenderHelper.drawText(zDirection, KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(zDirection, scale), lineZ,
-                Utils.Colors.WHITE, 0.75D);
+                Utils.Colors.WHITE, scale, false);
 
         GlStateManager.popMatrix();
 

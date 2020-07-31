@@ -11,8 +11,10 @@ import org.lwjgl.opengl.GL11;
 public class RenderHelper implements GlobalVars {
 
     public static void drawRect(int x, int y, int w, int h, int color) {
+        GL11.glPushMatrix();
         GL11.glLineWidth(1.0F);
         Gui.drawRect(x, y, x + w, y + h, color);
+        GL11.glPopMatrix();
     }
 
     public static void drawTextShadowCentered(String text, float  x, float y, int color) {
