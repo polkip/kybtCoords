@@ -6,8 +6,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opengl.GL11;
 
 public class RenderHelper implements GlobalVars {
@@ -99,56 +97,5 @@ public class RenderHelper implements GlobalVars {
 
     public static int getFontWidth(String text) {
         return (int) (minecraft.fontRendererObj.getStringWidth(text));
-    }
-
-
-
-    @SideOnly(Side.CLIENT)
-    public enum SourceFactor {
-        CONSTANT_ALPHA(32771),
-        CONSTANT_COLOR(32769),
-        DST_ALPHA(773),
-        DST_COLOR(774),
-        ONE(1),
-        ONE_MINUS_CONSTANT_ALPHA(32772),
-        ONE_MINUS_CONSTANT_COLOR(32770),
-        ONE_MINUS_DST_ALPHA(773),
-        ONE_MINUS_DST_COLOR(775),
-        ONE_MINUS_SRC_ALPHA(771),
-        ONE_MINUS_SRC_COLOR(769),
-        SRC_ALPHA(770),
-        SRC_ALPHA_SATURATE(776),
-        SRC_COLOR(768),
-        ZERO(0);
-
-        public final int factor;
-
-        SourceFactor(int factorIn) {
-            this.factor = factorIn;
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public enum DestFactor {
-        CONSTANT_ALPHA(32771),
-        CONSTANT_COLOR(32769),
-        DST_ALPHA(772),
-        DST_COLOR(774),
-        ONE(1),
-        ONE_MINUS_CONSTANT_ALPHA(32772),
-        ONE_MINUS_CONSTANT_COLOR(32770),
-        ONE_MINUS_DST_ALPHA(773),
-        ONE_MINUS_DST_COLOR(775),
-        ONE_MINUS_SRC_ALPHA(771),
-        ONE_MINUS_SRC_COLOR(769),
-        SRC_ALPHA(770),
-        SRC_COLOR(768),
-        ZERO(0);
-
-        public final int factor;
-
-        DestFactor(int factorIn) {
-            this.factor = factorIn;
-        }
     }
 }

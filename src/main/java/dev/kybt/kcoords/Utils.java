@@ -6,37 +6,17 @@ import net.minecraft.world.chunk.Chunk;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class Utils implements GlobalVars {
 
     public static final String[] DIRECTIONS = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
-    public static final Map<String, Integer> BIOMES = new HashMap<String, Integer>();
-
-    static {
-        BIOMES.put("Extreme Hills", Colors.DARK_GRAY);
-        BIOMES.put("Desert", Colors.CREAM);
-        BIOMES.put("Plains", Colors.DARK_GREEN);
-        BIOMES.put("Ocean", Colors.BLUE);
-        BIOMES.put("River", Colors.BLUE);
-        BIOMES.put("Swamp", Colors.CERULEAN);
-        BIOMES.put("Jungle", Colors.DARK_GREEN);
-        BIOMES.put("Beach", Colors.CREAM);
-        BIOMES.put("Hell", Colors.DARK_RED);
-        BIOMES.put("Taiga", Colors.CYAN);
-        BIOMES.put("The End", Colors.PURPLE);
-        BIOMES.put("Mesa", Colors.PERU);
-        BIOMES.put("Deep Ocean", Colors.DARK_GREEN);
-        BIOMES.put("Savanna", Colors.PERU);
-
-    }
 
     public static int toRGBA(int r, int g, int b, int a) {
         return (r << 16) + (g << 8) + (b) + (a << 24);
     }
 
+    // Credits to boomboompower
     public static int getDirection() {
         double direction = MathHelper.wrapAngleTo180_float(minecraft.thePlayer.rotationYaw) + 180.0D;
 
@@ -77,16 +57,6 @@ public class Utils implements GlobalVars {
         big = big.setScale(places, RoundingMode.HALF_UP);
         return big.doubleValue();
     }
-
-//    public static String fetchBiomeName() {}
-
-//    public static Map<String, String> fetchData() {
-//        Map<String, String> data = new HashMap<String, String>();
-//        String x;
-//        String y;
-//        String z;
-//        String cCounter;
-//    }
 
     // TODO: Make these do something.
     public static void saveSettings() {}
