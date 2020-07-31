@@ -1,0 +1,16 @@
+[
+{
+  "modid": "kcoords",
+  "name": "kybtCoords",
+  "description": "Adds a customizable coordinate box.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["kybt"],
+  "credits": "kybt",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
