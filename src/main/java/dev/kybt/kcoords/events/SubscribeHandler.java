@@ -6,6 +6,7 @@ import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.render.RenderHelper;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,8 +18,10 @@ public class SubscribeHandler implements GlobalVars {
     public static int width;
     public static int height;
 
-    public static String xDirection = "";
-    public static String zDirection = "";
+    private String xDirection = "";
+    private String zDirection = "";
+
+    private final RenderHelper render = RenderHelper.getInstance();
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent event) {
@@ -29,7 +32,7 @@ public class SubscribeHandler implements GlobalVars {
 //        updateRenders();
     }
 
-    public static void renderData() {
+    public void renderData() {
         int lineX = KybtCoords.positionY + 1;
         int lineY = lineX + 10;
         int lineZ = lineY + 10;
@@ -39,7 +42,7 @@ public class SubscribeHandler implements GlobalVars {
 
         updateDirections();
 
-        RenderHelper.drawRect(KybtCoords.positionX, KybtCoords.positionY,
+        render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
                 KybtCoords.positionX + 100, KybtCoords.positionY + 60, Utils.toRGBA(0, 0, 0, 127));
 
         double scale = 0.85;
@@ -54,32 +57,32 @@ public class SubscribeHandler implements GlobalVars {
 
         GlStateManager.pushMatrix();
 
-        RenderHelper.drawText("X: ", KybtCoords.positionX + 1, lineX, Utils.Colors.LIGHT_GRAY, scale, true);
-        RenderHelper.drawText("Y: ", KybtCoords.positionX + 1, lineY, Utils.Colors.LIGHT_GRAY, scale, true);
-        RenderHelper.drawText("Z: ", KybtCoords.positionX + 1, lineZ, Utils.Colors.LIGHT_GRAY, scale, true);
-        RenderHelper.drawText("C: ", KybtCoords.positionX + 1, lineC, Utils.Colors.LIGHT_GRAY, scale, true);
-        RenderHelper.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, Utils.Colors.LIGHT_GRAY, scale, true);
-        RenderHelper.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("X: ", KybtCoords.positionX + 1, lineX, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("Y: ", KybtCoords.positionX + 1, lineY, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("Z: ", KybtCoords.positionX + 1, lineZ, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("C: ", KybtCoords.positionX + 1, lineC, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, Utils.Colors.LIGHT_GRAY, scale, true);
+        render.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, Utils.Colors.LIGHT_GRAY, scale, true);
 
-        RenderHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("X: ", scale), lineX, Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Y: ", scale), lineY, Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Z: ", scale), lineZ, Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText("" + Utils.fetchCCounter(),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("C: ", scale), lineC, Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText("" + Utils.fetchBiomeName(playerLocation),
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale, true);
-        RenderHelper.drawText("" + minecraft.debug.split(" ")[0],
-                KybtCoords.positionX + 1 + RenderHelper.getScaledFontWidth("FPS: ", scale), lineFPS, Utils.Colors.WHITE, scale, true);
+        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("X: ", scale), lineX, Utils.Colors.WHITE, scale, true);
+        render.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("Y: ", scale), lineY, Utils.Colors.WHITE, scale, true);
+        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("Z: ", scale), lineZ, Utils.Colors.WHITE, scale, true);
+        render.drawText("" + Utils.fetchCCounter(),
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("C: ", scale), lineC, Utils.Colors.WHITE, scale, true);
+        render.drawText("" + Utils.fetchBiomeName(playerLocation),
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale, true);
+        render.drawText("" + minecraft.debug.split(" ")[0],
+                KybtCoords.positionX + 1 + render.getScaledFontWidth("FPS: ", scale), lineFPS, Utils.Colors.WHITE, scale, true);
 
-        RenderHelper.drawText(xDirection, KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(xDirection, scale), lineX,
+        render.drawText(xDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(xDirection, scale), lineX,
                 Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText(Utils.DIRECTIONS[Utils.getDirection()],
-                KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), lineY,
+        render.drawText(Utils.DIRECTIONS[Utils.getDirection()],
+                KybtCoords.positionX + 99 - render.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), lineY,
                 Utils.Colors.WHITE, scale, true);
-        RenderHelper.drawText(zDirection, KybtCoords.positionX + 99 - RenderHelper.getScaledFontWidth(zDirection, scale), lineZ,
+        render.drawText(zDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(zDirection, scale), lineZ,
                 Utils.Colors.WHITE, scale, true);
 
         GlStateManager.popMatrix();
@@ -106,8 +109,8 @@ public class SubscribeHandler implements GlobalVars {
 
     }
 
-    // TODO: There is probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to think of one.
-    public static void updateDirections() {
+    // TODO: There is probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to implement one.
+    private void updateDirections() {
         String direction = Utils.DIRECTIONS[Utils.getDirection()];
 
         if(direction.equals("S")) {

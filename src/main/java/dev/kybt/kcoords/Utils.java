@@ -59,7 +59,10 @@ public class Utils implements GlobalVars {
     }
 
     // TODO: Make these do something.
-    public static void saveSettings() {}
+    public static void saveSettings() {
+
+    }
+
     public static void fetchSettings() {}
 
     public static class Colors {

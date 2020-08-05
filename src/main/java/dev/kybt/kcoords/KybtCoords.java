@@ -7,7 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-@Mod(name = KybtCoords.NAME, modid = KybtCoords.MODID, version = KybtCoords.VERSION)
+@Mod(name = "kybtCoords", modid = "kcoords", version = "1.2")
 public class KybtCoords {
 
 //    High priority tasks (Bare minimum requirements for first release)
@@ -23,18 +23,25 @@ public class KybtCoords {
     // TODO: Make a gui for on the fly adjustments of the mod.
     // TODO: Implement saving.
 
-//    Mental Notes
-    // TODO: Avoid changing code at all costs to avoid false bans and controversy.
-    // TODO: Required data: X, Y, and Z coordinates, the cardinal direction of the player, the + and - directions for each coordinate, the C counter, the current biome, and the framerate.
-
     public static boolean isEnabled = true;
 
     public static int positionX = 0;
     public static int positionY = 0;
 
-    public static final String NAME = "kybtCoords";
-    public static final String MODID = "kcoords";
-    public static final String VERSION = "1.1";
+//    public static boolean outlined = true;
+//    public static boolean textShadow = true;
+//    public static boolean coloredBiomes = true;
+
+//    public static boolean showFPS = true;
+//    public static boolean showC = true;
+//    public static boolean showBiomes = true;
+//    public static boolean showCoordinates = true;
+
+//    public static int backgroundOpacity = 127;
+
+//    public static final String NAME = "kybtCoords";
+//    public static final String MODID = "kcoords";
+//    public static final String VERSION = "2.0";
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
