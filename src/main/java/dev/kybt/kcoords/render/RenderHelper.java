@@ -21,7 +21,6 @@ public class RenderHelper implements GlobalVars {
     public void drawRect(int x, int y, int w, int h, int color) {
         GL11.glPushMatrix();
         GL11.glLineWidth(1.0F);
-//        GL11.glTranslatef(0.0F, 0.0F, -1.0F);
         Gui.drawRect(x, y, x + w, y + h, color);
         GL11.glPopMatrix();
     }
@@ -31,13 +30,6 @@ public class RenderHelper implements GlobalVars {
         float offsetY = getFontHeight() / 2F;
         minecraft.fontRendererObj.drawStringWithShadow(text, x - offsetX, y - offsetY, color);
     }
-
-//    public void drawBoldText(String text, int x, int y, int color, double scale) {
-//        GlStateManager.pushMatrix();
-//        GlStateManager.disableDepth();
-//        GlStateManager.scale(scale, scale, scale);
-//        minecraft.fontRendererObj.set
-//    }
 
     public void drawText(String text, int x, int y, int color, double scale, boolean shadow) {
         GlStateManager.pushMatrix();

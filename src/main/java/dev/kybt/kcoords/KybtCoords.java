@@ -7,6 +7,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
+import java.util.logging.Logger;
+
 @Mod(name = "kybtCoords", modid = "kcoords", version = "1.2")
 public class KybtCoords {
 
@@ -48,5 +50,7 @@ public class KybtCoords {
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new SubscribeHandler());
         ClientCommandHandler.instance.registerCommand(new CommandKybtCoords());
+        Utils.loadSettings();
+        GlobalVars.LOGGER.info("Successfully initialized kybtCoords.");
     }
 }

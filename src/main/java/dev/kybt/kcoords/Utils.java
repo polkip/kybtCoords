@@ -1,17 +1,24 @@
 package dev.kybt.kcoords;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.chunk.Chunk;
 
+import java.io.*;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.regex.Pattern;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Utils implements GlobalVars {
 
     public static final String[] DIRECTIONS = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
     public static final int WHITE = rgba(255, 255, 255, 255);
+    private static final File SAVE_FILE = new File(new File(Minecraft.getMinecraft().mcDataDir.getPath() + "/mods/kybtCoords"), "kybtcoords.config");
+    private static JsonObject configData = new JsonObject();
 
     public static int rgba(int r, int g, int b, int a) {
         return (r << 16) + (g << 8) + (b) + (a << 24);
@@ -30,15 +37,8 @@ public class Utils implements GlobalVars {
         return MathHelper.floor_double(direction);
     }
 
-//    public static String fetchCCounter() {
-//        String c = "null";
-//        String renderInfo = minecraft.renderGlobal.getDebugInfoRenders();
-//        c = renderInfo.split(Pattern.quote("/"))[0].split(" ")[1];
-//        return c;
-//    }
-
     public static String fetchCCounter() {
-        String c = "Invalid.";
+        String c = "Invalid";
         String renderInfo = minecraft.renderGlobal.getDebugInfoRenders();
         c = renderInfo.split(" ")[1];
         return c;
@@ -78,11 +78,67 @@ public class Utils implements GlobalVars {
         return height;
     }
 
-    // TODO: Make these do something.
     public static void saveSettings() {
+        configData = new JsonObject();
+        try {
+            SAVE_FILE.createNewFile();
+            FileWriter writer = new FileWriter(SAVE_FILE);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            configData.addProperty("isEnabled", KybtCoords.isEnabled);
+            configData.addProperty("positionX", KybtCoords.positionX);
+            configData.addProperty("positionY", KybtCoords.positionY);
+            configData.addProperty("coloredBiomes", KybtCoords.coloredBiomes);
+            configData.addProperty("showBiomes", KybtCoords.showBiomes);
+            configData.addProperty("showC", KybtCoords.showC);
+            configData.addProperty("showFPS", KybtCoords.showFPS);
+            configData.addProperty("keyColor", KybtCoords.keyColor);
+            configData.addProperty("textColor", KybtCoords.textColor);
+            configData.addProperty("backgroundOpacity", KybtCoords.backgroundOpacity);
+
+            bufferedWriter.write(configData.toString());
+            bufferedWriter.close();
+            writer.close();
+        } catch(IOException e) {
+            LOGGER.error("ERROR: Failed to write config data to save file.");
+            e.printStackTrace();
+        }
     }
 
-    public static void fetchSettings() {}
+    public static void loadSettings() {
+        if(Files.exists(Paths.get(SAVE_FILE.getPath()))) {
+            LOGGER.info("Found save file, retrieving config data.");
+            try(BufferedReader reader = new BufferedReader(new FileReader(SAVE_FILE))) {
+                StringBuilder builder = new StringBuilder();
+
+                java.lang.String line;
+                while((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+
+                String data = builder.toString();
+                configData = new JsonParser().parse(data).getAsJsonObject();
+            } catch(Exception e) {
+                LOGGER.error("ERROR: Failed to fetch config data from save file. Attempting to save");
+                saveSettings();
+                e.printStackTrace();
+            }
+            KybtCoords.positionX = configData.has("positionX") ? configData.get("positionX").getAsInt() : 0;
+            KybtCoords.positionY = configData.has("positionY") ? configData.get("positionY").getAsInt() : 0;
+            KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() : rgba(54, 177, 223, 255);
+            KybtCoords.textColor = configData.has("textColor") ? configData.get("textColor").getAsInt() : WHITE;
+            KybtCoords.backgroundOpacity = configData.has("backgroundOpacity") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
+            KybtCoords.isEnabled = configData.has("isEnabled") && configData.get("isEnabled").getAsBoolean();
+            KybtCoords.showFPS = configData.has("showFPS") && configData.get("showFPS").getAsBoolean();
+            KybtCoords.showC = configData.has("showC") && configData.get("showC").getAsBoolean();
+            KybtCoords.showBiomes = configData.has("showBiomes") && configData.get("showBiomes").getAsBoolean();
+            KybtCoords.coloredBiomes = configData.has("coloredBiomes") && configData.get("coloredBiomes").getAsBoolean();
+
+        } else {
+            LOGGER.info("Couldn't find a save file, attempting to save.");
+            saveSettings();
+        }
+    }
 
 //    public static class Colors {
 //        public static final int WHITE = Utils.rgba(255, 255, 255, 255);

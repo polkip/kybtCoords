@@ -12,13 +12,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class SubscribeHandler implements GlobalVars {
 
-//    public static int right;
-//    public static int bottom;
-//    public static int width;
-//    public static int height;
+    public static int right;
+    public static int bottom;
+    public static int width;
+    public static int height;
 
-    private int height = KybtCoords.positionY + 60;
-    private final int width = KybtCoords.positionX + 100;
+    private int boxHeight = KybtCoords.positionY + 60;
+    private final int boxWidth = KybtCoords.positionX + 100;
 
     private String xDirection = "";
     private String zDirection = "";
@@ -31,7 +31,7 @@ public class SubscribeHandler implements GlobalVars {
         if(event.type != RenderGameOverlayEvent.ElementType.HOTBAR || minecraft.gameSettings.showDebugInfo || event.isCancelable()) return;
 
         renderTest();
-//        updateRenders();
+        updateRenders();
     }
 
     public void renderData() {
@@ -42,18 +42,18 @@ public class SubscribeHandler implements GlobalVars {
         int lineBiome = lineC + 10;
         int lineFPS = lineBiome + 10;
 
-        int height = KybtCoords.positionX + 100;
-        int width = KybtCoords.positionY + 60;
+        int height2 = KybtCoords.positionX + 100;
+        int width2 = KybtCoords.positionY + 60;
 
         updateDirections();
 
         double scale = 0.85;
 
         render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
-                width, height, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
+                width2, height2, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
 
-//        right = (KybtCoords.positionX + 62);
-//        width = 62;
+        right = (KybtCoords.positionX + 60);
+        width = 60;
 
         BlockPos playerLocation = new BlockPos(
                 minecraft.getRenderViewEntity().posX,
@@ -92,8 +92,8 @@ public class SubscribeHandler implements GlobalVars {
 
         GlStateManager.popMatrix();
 
-//        bottom = KybtCoords.positionY + 41;
-//        height = KybtCoords.positionX + 40;
+        bottom = KybtCoords.positionY + 41;
+        height = KybtCoords.positionX + 40;
     }
 
     public void renderTest() {
@@ -112,7 +112,10 @@ public class SubscribeHandler implements GlobalVars {
 //        GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
         render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
-                width, height, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
+                boxWidth, boxHeight, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
+
+        right = (KybtCoords.positionX + 60);
+        width = 60;
 
         // Render X coordinate and direction
         render.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
@@ -170,28 +173,31 @@ public class SubscribeHandler implements GlobalVars {
 
 //        int width = KybtCoords.positionX + 100;
 //        int height = KybtCoords.positionY + line;
-        height = KybtCoords.positionY + line;
+        bottom = KybtCoords.positionY + 100;
+        height = KybtCoords.positionX + 101;
+
+        boxHeight = KybtCoords.positionY + line;
     }
 
-//    public static void updateRenders() {
-//        ScaledResolution resolution = new ScaledResolution(minecraft);
-//
-//        if(bottom >= resolution.getScaledHeight())
-//            KybtCoords.positionY = resolution.getScaledHeight() - height;
-//
-//        if(right >= resolution.getScaledWidth())
-//            KybtCoords.positionX = resolution.getScaledWidth() - width;
-//
-//        if(KybtCoords.positionX <= 0)
-//            KybtCoords.positionX = 0;
-//
-//
-//        if(KybtCoords.positionY <= 0)
-//            KybtCoords.positionY = 0;
-//
-//    }
+    public static void updateRenders() {
+        ScaledResolution resolution = new ScaledResolution(minecraft);
 
-    // TODO: There is probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to implement one.
+        if(bottom >= resolution.getScaledHeight())
+            KybtCoords.positionY = resolution.getScaledHeight() - height;
+
+        if(right >= resolution.getScaledWidth())
+            KybtCoords.positionX = resolution.getScaledWidth() - width;
+
+        if(KybtCoords.positionX <= 0)
+            KybtCoords.positionX = 0;
+
+
+        if(KybtCoords.positionY <= 0)
+            KybtCoords.positionY = 0;
+
+    }
+
+    // FIXME: There is probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to find one.
     private void updateDirections() {
         String direction = Utils.DIRECTIONS[Utils.getDirection()];
 

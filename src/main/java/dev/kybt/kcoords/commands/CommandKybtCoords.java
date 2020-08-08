@@ -1,6 +1,7 @@
 package dev.kybt.kcoords.commands;
 
 import dev.kybt.kcoords.KybtCoords;
+import dev.kybt.kcoords.gui.PositionGUI;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -39,6 +40,7 @@ public class CommandKybtCoords implements ICommand {
                 KybtCoords.isEnabled = !KybtCoords.isEnabled;
             } else if(args[0].equalsIgnoreCase("config")) {
                 // TODO: Finish implementing configuration command.
+                new PositionGUI().display();
             }
         }
     }
