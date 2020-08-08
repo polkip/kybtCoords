@@ -6,6 +6,7 @@ import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.render.RenderHelper;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.dispenser.IPosition;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -114,8 +115,8 @@ public class SubscribeHandler implements GlobalVars {
         render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
                 boxWidth, boxHeight, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
 
-        right = (KybtCoords.positionX + 60);
-        width = 60;
+        right = (KybtCoords.positionX + 100);
+        width = 101;
 
         // Render X coordinate and direction
         render.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
@@ -173,10 +174,10 @@ public class SubscribeHandler implements GlobalVars {
 
 //        int width = KybtCoords.positionX + 100;
 //        int height = KybtCoords.positionY + line;
-        bottom = KybtCoords.positionY + 100;
-        height = KybtCoords.positionX + 101;
+        bottom = KybtCoords.positionY + boxHeight;
+        height = boxHeight;
 
-        boxHeight = KybtCoords.positionY + line;
+        boxHeight = line - KybtCoords.positionY;
     }
 
     public static void updateRenders() {
@@ -194,10 +195,9 @@ public class SubscribeHandler implements GlobalVars {
 
         if(KybtCoords.positionY <= 0)
             KybtCoords.positionY = 0;
-
     }
 
-    // FIXME: There is probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to find one.
+    // FIXME: There's probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to find one.
     private void updateDirections() {
         String direction = Utils.DIRECTIONS[Utils.getDirection()];
 
