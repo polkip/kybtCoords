@@ -5,8 +5,6 @@ import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.render.RenderHelper;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.dispenser.IPosition;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -31,74 +29,74 @@ public class SubscribeHandler implements GlobalVars {
         if(!KybtCoords.isEnabled) return;
         if(event.type != RenderGameOverlayEvent.ElementType.HOTBAR || minecraft.gameSettings.showDebugInfo || event.isCancelable()) return;
 
-        renderTest();
+        renderData();
         updateRenders();
     }
 
+//    public void renderData() {
+//        int lineX = KybtCoords.positionY + 1;
+//        int lineY = lineX + 10;
+//        int lineZ = lineY + 10;
+//        int lineC = lineZ + 10;
+//        int lineBiome = lineC + 10;
+//        int lineFPS = lineBiome + 10;
+//
+//        int height2 = KybtCoords.positionX + 100;
+//        int width2 = KybtCoords.positionY + 60;
+//
+//        updateDirections();
+//
+//        double scale = 0.85;
+//
+//        render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
+//                width2, height2, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
+//
+//        right = (KybtCoords.positionX + 60);
+//        width = 60;
+//
+//        BlockPos playerLocation = new BlockPos(
+//                minecraft.getRenderViewEntity().posX,
+//                minecraft.getRenderViewEntity().getEntityBoundingBox().minY,
+//                minecraft.getRenderViewEntity().posZ);
+//
+//        GlStateManager.pushMatrix();
+//
+//        render.drawText("X: ", KybtCoords.positionX + 1, lineX, KybtCoords.keyColor, scale, true);
+//        render.drawText("Y: ", KybtCoords.positionX + 1, lineY, KybtCoords.keyColor, scale, true);
+//        render.drawText("Z: ", KybtCoords.positionX + 1, lineZ, KybtCoords.keyColor, scale, true);
+//        render.drawText("C: ", KybtCoords.positionX + 1, lineC, KybtCoords.keyColor, scale, true);
+//        render.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, KybtCoords.keyColor, scale, true);
+//        render.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, KybtCoords.keyColor, scale, true);
+//
+//        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("X: ", scale), lineX, KybtCoords.textColor, scale, true);
+//        render.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("Y: ", scale), lineY, KybtCoords.textColor, scale, true);
+//        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("Z: ", scale), lineZ, KybtCoords.textColor, scale, true);
+//        render.drawText("" + Utils.fetchCCounter(),
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("C: ", scale), lineC, KybtCoords.textColor, scale, true);
+//        render.drawText("" + Utils.fetchBiomeName(playerLocation),
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale, true);
+//        render.drawText("" + minecraft.debug.split(" ")[0],
+//                KybtCoords.positionX + 1 + render.getScaledFontWidth("FPS: ", scale), lineFPS, KybtCoords.textColor, scale, true);
+//
+//        render.drawText(xDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(xDirection, scale), lineX,
+//                KybtCoords.textColor, scale, true);
+//        render.drawText(Utils.DIRECTIONS[Utils.getDirection()],
+//                KybtCoords.positionX + 99 - render.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), lineY,
+//                KybtCoords.keyColor, scale, true);
+//        render.drawText(zDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(zDirection, scale), lineZ,
+//                KybtCoords.textColor, scale, true);
+//
+//        GlStateManager.popMatrix();
+//
+//        bottom = KybtCoords.positionY + 41;
+//        height = KybtCoords.positionX + 40;
+//    }
+
     public void renderData() {
-        int lineX = KybtCoords.positionY + 1;
-        int lineY = lineX + 10;
-        int lineZ = lineY + 10;
-        int lineC = lineZ + 10;
-        int lineBiome = lineC + 10;
-        int lineFPS = lineBiome + 10;
-
-        int height2 = KybtCoords.positionX + 100;
-        int width2 = KybtCoords.positionY + 60;
-
-        updateDirections();
-
-        double scale = 0.85;
-
-        render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
-                width2, height2, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
-
-        right = (KybtCoords.positionX + 60);
-        width = 60;
-
-        BlockPos playerLocation = new BlockPos(
-                minecraft.getRenderViewEntity().posX,
-                minecraft.getRenderViewEntity().getEntityBoundingBox().minY,
-                minecraft.getRenderViewEntity().posZ);
-
-        GlStateManager.pushMatrix();
-
-        render.drawText("X: ", KybtCoords.positionX + 1, lineX, KybtCoords.keyColor, scale, true);
-        render.drawText("Y: ", KybtCoords.positionX + 1, lineY, KybtCoords.keyColor, scale, true);
-        render.drawText("Z: ", KybtCoords.positionX + 1, lineZ, KybtCoords.keyColor, scale, true);
-        render.drawText("C: ", KybtCoords.positionX + 1, lineC, KybtCoords.keyColor, scale, true);
-        render.drawText("Biome: ", KybtCoords.positionX + 1, lineBiome, KybtCoords.keyColor, scale, true);
-        render.drawText("FPS: ", KybtCoords.positionX + 1, lineFPS, KybtCoords.keyColor, scale, true);
-
-        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("X: ", scale), lineX, KybtCoords.textColor, scale, true);
-        render.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("Y: ", scale), lineY, KybtCoords.textColor, scale, true);
-        render.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("Z: ", scale), lineZ, KybtCoords.textColor, scale, true);
-        render.drawText("" + Utils.fetchCCounter(),
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("C: ", scale), lineC, KybtCoords.textColor, scale, true);
-        render.drawText("" + Utils.fetchBiomeName(playerLocation),
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("Biome: ", scale), lineBiome, Utils.fetchBiomeColor(playerLocation), scale, true);
-        render.drawText("" + minecraft.debug.split(" ")[0],
-                KybtCoords.positionX + 1 + render.getScaledFontWidth("FPS: ", scale), lineFPS, KybtCoords.textColor, scale, true);
-
-        render.drawText(xDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(xDirection, scale), lineX,
-                KybtCoords.textColor, scale, true);
-        render.drawText(Utils.DIRECTIONS[Utils.getDirection()],
-                KybtCoords.positionX + 99 - render.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), lineY,
-                KybtCoords.keyColor, scale, true);
-        render.drawText(zDirection, KybtCoords.positionX + 99 - render.getScaledFontWidth(zDirection, scale), lineZ,
-                KybtCoords.textColor, scale, true);
-
-        GlStateManager.popMatrix();
-
-        bottom = KybtCoords.positionY + 41;
-        height = KybtCoords.positionX + 40;
-    }
-
-    public void renderTest() {
-        int line = KybtCoords.positionY + 2;
+        int line = KybtCoords.positionY + 1;
 
         updateDirections();
 
@@ -116,7 +114,7 @@ public class SubscribeHandler implements GlobalVars {
                 boxWidth, boxHeight, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
 
         right = (KybtCoords.positionX + 100);
-        width = 101;
+        width = 100;
 
         // Render X coordinate and direction
         render.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
@@ -180,7 +178,7 @@ public class SubscribeHandler implements GlobalVars {
         boxHeight = line - KybtCoords.positionY;
     }
 
-    public static void updateRenders() {
+    public void updateRenders() {
         ScaledResolution resolution = new ScaledResolution(minecraft);
 
         if(bottom >= resolution.getScaledHeight())

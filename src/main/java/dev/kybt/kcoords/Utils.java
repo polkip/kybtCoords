@@ -2,6 +2,7 @@ package dev.kybt.kcoords;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sun.media.jfxmedia.logging.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -24,9 +25,7 @@ public class Utils implements GlobalVars {
         return (r << 16) + (g << 8) + (b) + (a << 24);
     }
 
-
-
-    // Credits to boomboompower
+    // Credit to boomboompower
     public static int getDirection() {
         double direction = MathHelper.wrapAngleTo180_float(minecraft.thePlayer.rotationYaw) + 180.0D;
 
@@ -68,20 +67,22 @@ public class Utils implements GlobalVars {
         return big.doubleValue();
     }
 
-    public static int getHeight() {
-        int height = KybtCoords.positionX + 100;
-
-        if(!KybtCoords.showBiomes) height -= 10;
-        if(!KybtCoords.showC) height -= 10;
-        if(!KybtCoords.showFPS) height -= 10;
-
-        return height;
-    }
+//    public static int getHeight() {
+//        int height = KybtCoords.positionX + 100;
+//
+//        if(!KybtCoords.showBiomes) height -= 10;
+//        if(!KybtCoords.showC) height -= 10;
+//        if(!KybtCoords.showFPS) height -= 10;
+//
+//        return height;
+//    }
 
     public static void saveSettings() {
         configData = new JsonObject();
+        LOGGER.info("Save file path1: " + Paths.get(SAVE_FILE.getPath()));
         try {
             SAVE_FILE.createNewFile();
+            LOGGER.info("Save file path2: " + Paths.get(SAVE_FILE.getPath()));
             FileWriter writer = new FileWriter(SAVE_FILE);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 

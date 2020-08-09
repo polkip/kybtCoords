@@ -1,6 +1,5 @@
 package dev.kybt.kcoords.gui;
 
-import com.google.common.eventbus.Subscribe;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
@@ -32,7 +31,7 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawDefaultBackground();
-        subscribe.renderTest();
+        subscribe.renderData();
         super.drawScreen(mouseX, mouseY, partialTicks);
     }
 
@@ -69,7 +68,7 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         if(drag) {
-            SubscribeHandler.updateRenders();
+            subscribe.updateRenders();
 
             KybtCoords.positionX += mouseX - lastX;
             KybtCoords.positionY += mouseY - lastY;
