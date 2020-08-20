@@ -19,14 +19,15 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     private final SubscribeHandler subscribe = new SubscribeHandler();
 
     public void display() {
-        MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @SubscribeEvent
-    public void onTick(TickEvent.ClientTickEvent event) {
-        MinecraftForge.EVENT_BUS.unregister(this);
+//        MinecraftForge.EVENT_BUS.register(this);
         minecraft.displayGuiScreen(this);
     }
+
+//    @SubscribeEvent
+//    public void onTick(TickEvent.ClientTickEvent event) {
+//        MinecraftForge.EVENT_BUS.unregister(this);
+//        minecraft.displayGuiScreen(this);
+//    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {

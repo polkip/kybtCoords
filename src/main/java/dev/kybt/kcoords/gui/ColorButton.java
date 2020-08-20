@@ -1,25 +1,36 @@
 package dev.kybt.kcoords.gui;
 
+import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.render.RenderHelper;
-import javafx.scene.paint.Color;
+import dev.kybt.kcoords.render.SurfaceHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
 
 // TODO: Implement this in a future version
 public class ColorButton extends GuiButton {
 
-    private final RenderHelper render = RenderHelper.getInstance();
+    private final SurfaceHelper render = SurfaceHelper.getInstance();
 
     private int color;
+//    private final int buttonId;
 
-    private final int w = 10, h = 10;
+    private final int w = 20, h = 20;
 
-    public ColorButton(int buttonId, int x, int y, String buttonText, int color) {
+    public ColorButton(int buttonId, int x, int y, String buttonText, int colorID) {
         super(buttonId, x, y, buttonText);
-        this.color = color;
+//        this.buttonId = buttonId;
+        switch(colorID) {
+            case 0:
+                this.color = KybtCoords.keyColor;
+                break;
+            case 1:
+                this.color = KybtCoords.textColor;
+                break;
+            case 2:
+                this.color = KybtCoords.backgroundColor;
+                break;
+        }
     }
 
     @Override
@@ -29,14 +40,17 @@ public class ColorButton extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        render.drawRect(this.xPosition, this.yPosition, width, height, Utils.WHITE);
-        render.drawRect(xPosition, yPosition, (width - 1), (height - 1), color);
+        render.drawRect(this.xPosition, this.yPosition, w, h, Utils.WHITE);
+        render.drawRect(xPosition, yPosition, (w - 1), (h - 1), color);
     }
 
-    @Override
-    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
-        return super.mousePressed(mc, mouseX, mouseY);
-    }
+//    @Override
+//    public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+//        if(mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height) {
+//            new ColorGUI(id).display();
+//        }
+//        return super.mousePressed(mc, mouseX, mouseY);
+//    }
 
     @Override
     public void playPressSound(SoundHandler soundHandlerIn) {

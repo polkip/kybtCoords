@@ -8,13 +8,13 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
-public class RenderHelper implements GlobalVars {
+public class SurfaceHelper implements GlobalVars {
 
-    private static final RenderHelper INSTANCE = new RenderHelper();
+    private static final SurfaceHelper INSTANCE = new SurfaceHelper();
 
-    private RenderHelper() {}
+    private SurfaceHelper() {}
 
-    public static RenderHelper getInstance() {
+    public static SurfaceHelper getInstance() {
         return INSTANCE;
     }
 

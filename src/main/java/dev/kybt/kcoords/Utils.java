@@ -2,7 +2,6 @@ package dev.kybt.kcoords;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.sun.media.jfxmedia.logging.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
@@ -23,6 +22,12 @@ public class Utils implements GlobalVars {
 
     public static int rgba(int r, int g, int b, int a) {
         return (r << 16) + (g << 8) + (b) + (a << 24);
+    }
+
+    public static int[] toRGBA(int color) {
+        return new int[] {
+                (color >> 16 & 255), (color >> 8 & 255), (color & 255), (color >> 24 & 255)
+        };
     }
 
     // Credit to boomboompower
@@ -95,7 +100,7 @@ public class Utils implements GlobalVars {
             configData.addProperty("showFPS", KybtCoords.showFPS);
             configData.addProperty("keyColor", KybtCoords.keyColor);
             configData.addProperty("textColor", KybtCoords.textColor);
-            configData.addProperty("backgroundOpacity", KybtCoords.backgroundOpacity);
+            configData.addProperty("backgroundOpacity", KybtCoords.backgroundColor);
 
             bufferedWriter.write(configData.toString());
             bufferedWriter.close();
@@ -128,7 +133,7 @@ public class Utils implements GlobalVars {
             KybtCoords.positionY = configData.has("positionY") ? configData.get("positionY").getAsInt() : 0;
             KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() : rgba(54, 177, 223, 255);
             KybtCoords.textColor = configData.has("textColor") ? configData.get("textColor").getAsInt() : WHITE;
-            KybtCoords.backgroundOpacity = configData.has("backgroundOpacity") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
+            KybtCoords.backgroundColor = configData.has("backgroundOpacity") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
             KybtCoords.isEnabled = configData.has("isEnabled") && configData.get("isEnabled").getAsBoolean();
             KybtCoords.showFPS = configData.has("showFPS") && configData.get("showFPS").getAsBoolean();
             KybtCoords.showC = configData.has("showC") && configData.get("showC").getAsBoolean();

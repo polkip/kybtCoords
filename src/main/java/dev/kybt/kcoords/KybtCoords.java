@@ -30,8 +30,9 @@ public class KybtCoords {
     public static int positionX = 0;
     public static int positionY = 0;
 
-    public static boolean coloredBiomes = true;
+    public static double scale = 1.0;
 
+    public static boolean coloredBiomes = true;
     public static boolean showFPS = true;
     public static boolean showC = true;
     public static boolean showBiomes = true;
@@ -40,7 +41,7 @@ public class KybtCoords {
     public static int keyColor = Utils.rgba(54, 177, 223, 255);
     public static int textColor = Utils.WHITE;
 
-    public static int backgroundOpacity = 127;
+    public static int backgroundColor = Utils.rgba(0, 0, 0, 127);
 
 //    public static final String NAME = "kybtCoords";
 //    public static final String MODID = "kcoords";

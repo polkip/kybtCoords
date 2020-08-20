@@ -3,7 +3,7 @@ package dev.kybt.kcoords.events;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.render.RenderHelper;
+import dev.kybt.kcoords.render.SurfaceHelper;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.util.BlockPos;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -22,7 +22,7 @@ public class SubscribeHandler implements GlobalVars {
     private String xDirection = "";
     private String zDirection = "";
 
-    private final RenderHelper render = RenderHelper.getInstance();
+    private final SurfaceHelper render = SurfaceHelper.getInstance();
 
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent event) {
@@ -111,7 +111,7 @@ public class SubscribeHandler implements GlobalVars {
 //        GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
         render.drawRect(KybtCoords.positionX, KybtCoords.positionY,
-                boxWidth, boxHeight, Utils.rgba(0, 0, 0, KybtCoords.backgroundOpacity));
+                boxWidth, boxHeight, KybtCoords.backgroundColor);
 
         right = (KybtCoords.positionX + 100);
         width = 100;
