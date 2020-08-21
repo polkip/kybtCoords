@@ -17,17 +17,15 @@ public class Utils implements GlobalVars {
 
     public static final String[] DIRECTIONS = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
     public static final int WHITE = rgba(255, 255, 255, 255);
-    private static final File SAVE_FILE = new File(new File(Minecraft.getMinecraft().mcDataDir.getPath() + "/mods/kybtCoords"), "kybtcoords.config");
+    private static final File SAVE_FILE = new File(new File(Minecraft.getMinecraft().mcDataDir.getPath() + "/mods/kybtCoords"), "kcoordsconfig.txt");
     private static JsonObject configData = new JsonObject();
 
     public static int rgba(int r, int g, int b, int a) {
         return (r << 16) + (g << 8) + (b) + (a << 24);
     }
 
-    public static int[] toRGBA(int color) {
-        return new int[] {
-                (color >> 16 & 255), (color >> 8 & 255), (color & 255), (color >> 24 & 255)
-        };
+    public static int[] toRGBA(int buffer) {
+        return new int[] { (buffer >> 16 & 255), (buffer >> 8 & 255), (buffer & 255), (buffer >> 24 & 255) };
     }
 
     // Credit to boomboompower
@@ -42,7 +40,7 @@ public class Utils implements GlobalVars {
     }
 
     public static String fetchCCounter() {
-        String c = "Invalid";
+        String c = "Nil";
         String renderInfo = minecraft.renderGlobal.getDebugInfoRenders();
         c = renderInfo.split(" ")[1];
         return c;
@@ -100,7 +98,7 @@ public class Utils implements GlobalVars {
             configData.addProperty("showFPS", KybtCoords.showFPS);
             configData.addProperty("keyColor", KybtCoords.keyColor);
             configData.addProperty("textColor", KybtCoords.textColor);
-            configData.addProperty("backgroundOpacity", KybtCoords.backgroundColor);
+            configData.addProperty("backgroundColor", KybtCoords.backgroundColor);
 
             bufferedWriter.write(configData.toString());
             bufferedWriter.close();
@@ -133,7 +131,7 @@ public class Utils implements GlobalVars {
             KybtCoords.positionY = configData.has("positionY") ? configData.get("positionY").getAsInt() : 0;
             KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() : rgba(54, 177, 223, 255);
             KybtCoords.textColor = configData.has("textColor") ? configData.get("textColor").getAsInt() : WHITE;
-            KybtCoords.backgroundColor = configData.has("backgroundOpacity") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
+            KybtCoords.backgroundColor = configData.has("backgroundColor") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
             KybtCoords.isEnabled = configData.has("isEnabled") && configData.get("isEnabled").getAsBoolean();
             KybtCoords.showFPS = configData.has("showFPS") && configData.get("showFPS").getAsBoolean();
             KybtCoords.showC = configData.has("showC") && configData.get("showC").getAsBoolean();

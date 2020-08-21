@@ -7,23 +7,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-import java.util.logging.Logger;
-
-@Mod(name = "kybtCoords", modid = "kcoords", version = "1.2")
+@Mod(name = "kybtCoords", modid = "kcoords", version = "2.3")
 public class KybtCoords {
 
-//    High priority tasks (Bare minimum requirements for first release)
-    // TO-DO: Create a command for configuring the mod. (Done)
-    // TO-DO: Figure out how to render a rectangle with transparency and color. (Done)
-    // TO-DO: Figure out how to render text on said rectangle. (Done)
-    // TO-DO: Make something that fetches the required data for display. (Done)
-    // TO-DO: Add default colors. (Done)
-
 //    Low priority tasks (Useful features to be implemented in future versions)
-    // TODO: Make it customizable.
-    // TODO: Allow the coordinates box to be moved freely with ease.
     // TODO: Make a gui for on the fly adjustments of the mod.
-    // TODO: Implement saving.
+    // TODO: Implement saving. (Almost implemented, doesn't work properly yet)
 
     public static boolean isEnabled = true;
 
@@ -38,7 +27,7 @@ public class KybtCoords {
     public static boolean showBiomes = true;
 //    public static boolean showCoordinates = true;
 
-    public static int keyColor = Utils.rgba(54, 177, 223, 255);
+    public static int keyColor = Utils.rgba(92, 144, 228, 255);
     public static int textColor = Utils.WHITE;
 
     public static int backgroundColor = Utils.rgba(0, 0, 0, 127);

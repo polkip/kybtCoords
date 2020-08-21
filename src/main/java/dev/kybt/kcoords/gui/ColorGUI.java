@@ -1,15 +1,14 @@
 package dev.kybt.kcoords.gui;
 
-import com.google.common.eventbus.Subscribe;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.events.SubscribeHandler;
 import dev.kybt.kcoords.render.SurfaceHelper;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
-import net.minecraft.client.gui.*;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
@@ -18,11 +17,6 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     private final SubscribeHandler subscribe = new SubscribeHandler();
     private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
 
-    private int red;
-    private int green;
-    private int blue;
-    private int alpha;
-
     private GuiSlider sliderRed;
     private GuiSlider sliderGreen;
     private GuiSlider sliderBlue;
@@ -30,7 +24,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
 
     private GuiButton buttonSave;
 
-    private int currentColor;
+    private int currentColor = 0;
     private final int id;
 
     public ColorGUI(int id) {
@@ -46,11 +40,6 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
                 currentColor = KybtCoords.backgroundColor;
                 break;
         }
-
-        red = Utils.toRGBA(currentColor)[0];
-        green = Utils.toRGBA(currentColor)[1];
-        blue = Utils.toRGBA(currentColor)[2];
-        alpha = Utils.toRGBA(currentColor)[3];
     }
 
     public void display() {
@@ -66,8 +55,13 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawDefaultBackground();
+        subscribe.renderData();
         super.drawScreen(mouseX, mouseY, partialTicks);
 
+    }
+
+    public void updateScreen() {
+        updateColor();
     }
 
     @Override
@@ -93,28 +87,8 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     }
 
     protected void actionPerformed(GuiButton button) {
-        switch(button.id) {
-            case 0:
-                red = sliderRed.getValueInt();
-                updateColor();
-                break;
-            case 1:
-                green = sliderGreen.getValueInt();
-                updateColor();
-                break;
-            case 2:
-                blue = sliderBlue.getValueInt();
-                updateColor();
-                break;
-            case 3:
-                alpha = sliderAlpha.getValueInt();
-                updateColor();
-                break;
-            case 4:
-                updateColor();
-//                minecraft.displayGuiScreen(null);
-                new ConfigGUI().display();
-                break;
+        if (button.id == 4) {
+            new ConfigGUI().display();
         }
     }
 
@@ -131,14 +105,13 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     }
 
     private void updateColor() {
-        currentColor = Utils.rgba(red, green, blue, alpha);
-
+        currentColor = Utils.rgba(sliderRed.getValueInt(), sliderGreen.getValueInt(), sliderBlue.getValueInt(), sliderAlpha.getValueInt());
         switch(id) {
             case 0:
-                KybtCoords.textColor = currentColor;
+                KybtCoords.keyColor = currentColor;
                 break;
             case 1:
-                KybtCoords.keyColor = currentColor;
+                KybtCoords.textColor = currentColor;
                 break;
             case 2:
                 KybtCoords.backgroundColor = currentColor;

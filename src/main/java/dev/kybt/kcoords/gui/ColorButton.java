@@ -10,16 +10,19 @@ import net.minecraft.client.gui.GuiButton;
 // TODO: Implement this in a future version
 public class ColorButton extends GuiButton {
 
-    private final SurfaceHelper render = SurfaceHelper.getInstance();
+    private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
 
     private int color;
+    public int colorID;
 //    private final int buttonId;
 
     private final int w = 20, h = 20;
 
     public ColorButton(int buttonId, int x, int y, String buttonText, int colorID) {
-        super(buttonId, x, y, buttonText);
 //        this.buttonId = buttonId;
+        super(buttonId, x, y, buttonText);
+        this.colorID = colorID;
+
         switch(colorID) {
             case 0:
                 this.color = KybtCoords.keyColor;
@@ -40,8 +43,9 @@ public class ColorButton extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        render.drawRect(this.xPosition, this.yPosition, w, h, Utils.WHITE);
-        render.drawRect(xPosition, yPosition, (w - 1), (h - 1), color);
+        surfaceHelper.drawOutlinedRectFilled(xPosition, yPosition, w, h, Utils.WHITE, color, 1);
+//        surfaceHelper.drawRect(this.xPosition, this.yPosition, w, h, Utils.WHITE);
+//        surfaceHelper.drawRect(xPosition, yPosition, (w - 1), (h - 1), color);
     }
 
 //    @Override
