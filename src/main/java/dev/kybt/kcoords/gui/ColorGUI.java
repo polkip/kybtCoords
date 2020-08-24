@@ -94,6 +94,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
 
     @Override
     public void onGuiClosed() {
+        Utils.saveSettings();
         updateColor();
         new ConfigGUI().display();
         super.onGuiClosed();

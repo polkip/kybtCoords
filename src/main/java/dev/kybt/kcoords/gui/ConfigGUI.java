@@ -150,6 +150,7 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
+        Utils.saveSettings();
     }
 
     @Override

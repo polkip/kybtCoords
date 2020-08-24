@@ -12,12 +12,15 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Utils implements GlobalVars {
 
     public static final String[] DIRECTIONS = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
     public static final int WHITE = rgba(255, 255, 255, 255);
-    private static final File SAVE_FILE = new File(new File(Minecraft.getMinecraft().mcDataDir.getPath() + "/mods/kybtCoords"), "kcoordsconfig.txt");
+    private static final File SAVE_FILE = new File(minecraft.mcDataDir.getParent(), "kybtCoords.config");
+//    private static final File TEST_FILE = new File(minecraft.mcDataDir.getParent() + "\\mods\\kybtCoords", "kybtCoords.config");
     private static JsonObject configData = new JsonObject();
 
     public static int rgba(int r, int g, int b, int a) {
@@ -25,7 +28,9 @@ public class Utils implements GlobalVars {
     }
 
     public static int[] toRGBA(int buffer) {
-        return new int[] { (buffer >> 16 & 255), (buffer >> 8 & 255), (buffer & 255), (buffer >> 24 & 255) };
+        return new int[] {
+                (buffer >> 16 & 255), (buffer >> 8 & 255), (buffer & 255), (buffer >> 24 & 255)
+        };
     }
 
     // Credit to boomboompower
@@ -40,7 +45,7 @@ public class Utils implements GlobalVars {
     }
 
     public static String fetchCCounter() {
-        String c = "Nil";
+        String c;
         String renderInfo = minecraft.renderGlobal.getDebugInfoRenders();
         c = renderInfo.split(" ")[1];
         return c;
@@ -66,26 +71,16 @@ public class Utils implements GlobalVars {
 
     public static double roundDouble(double value, int places) {
         BigDecimal big = new BigDecimal(Double.toString(value));
-        big = big.setScale(places, RoundingMode.HALF_UP);
+        big = big.setScale(places, RoundingMode.HALF_EVEN);
         return big.doubleValue();
     }
 
-//    public static int getHeight() {
-//        int height = KybtCoords.positionX + 100;
-//
-//        if(!KybtCoords.showBiomes) height -= 10;
-//        if(!KybtCoords.showC) height -= 10;
-//        if(!KybtCoords.showFPS) height -= 10;
-//
-//        return height;
-//    }
-
     public static void saveSettings() {
         configData = new JsonObject();
-        LOGGER.info("Save file path1: " + Paths.get(SAVE_FILE.getPath()));
+//        LOGGER.info("Save file path1: " + Paths.get(SAVE_FILE.getPath()));
         try {
             SAVE_FILE.createNewFile();
-            LOGGER.info("Save file path2: " + Paths.get(SAVE_FILE.getPath()));
+//            LOGGER.info("Save file path2: " + Paths.get(SAVE_FILE.getPath()));
             FileWriter writer = new FileWriter(SAVE_FILE);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
@@ -110,12 +105,13 @@ public class Utils implements GlobalVars {
     }
 
     public static void loadSettings() {
+        configData = new JsonObject();
         if(Files.exists(Paths.get(SAVE_FILE.getPath()))) {
             LOGGER.info("Found save file, retrieving config data.");
             try(BufferedReader reader = new BufferedReader(new FileReader(SAVE_FILE))) {
                 StringBuilder builder = new StringBuilder();
 
-                java.lang.String line;
+                String line;
                 while((line = reader.readLine()) != null) {
                     builder.append(line);
                 }
@@ -129,9 +125,9 @@ public class Utils implements GlobalVars {
             }
             KybtCoords.positionX = configData.has("positionX") ? configData.get("positionX").getAsInt() : 0;
             KybtCoords.positionY = configData.has("positionY") ? configData.get("positionY").getAsInt() : 0;
-            KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() : rgba(54, 177, 223, 255);
+            KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() :  rgba(92, 144, 228, 255);
             KybtCoords.textColor = configData.has("textColor") ? configData.get("textColor").getAsInt() : WHITE;
-            KybtCoords.backgroundColor = configData.has("backgroundColor") ? configData.get("backgroundOpacity").getAsInt() : rgba(0, 0, 0, 127);
+            KybtCoords.backgroundColor = configData.has("backgroundColor") ? configData.get("backgroundColor").getAsInt() : rgba(0, 0, 0, 127);
             KybtCoords.isEnabled = configData.has("isEnabled") && configData.get("isEnabled").getAsBoolean();
             KybtCoords.showFPS = configData.has("showFPS") && configData.get("showFPS").getAsBoolean();
             KybtCoords.showC = configData.has("showC") && configData.get("showC").getAsBoolean();
@@ -143,24 +139,4 @@ public class Utils implements GlobalVars {
             saveSettings();
         }
     }
-
-//    public static class Colors {
-//        public static final int WHITE = Utils.rgba(255, 255, 255, 255);
-//        public static final int BLACK = Utils.rgba(0, 0, 0, 255);
-//        public static final int RED = Utils.rgba(255, 0, 0, 255);
-//        public static final int GREEN = Utils.rgba(0, 255, 0, 255);
-//        public static final int DARK_GREEN = Utils.rgba(0, 128, 0, 255);
-//        public static final int BLUE = Utils.rgba(0, 0, 255, 255);
-//        public static final int LIGHT_BLUE = Utils.rgba(189, 204, 199, 255);
-//        public static final int PURPLE = Utils.rgba(163, 73, 163, 255);
-//        public static final int YELLOW = Utils.rgba(255, 255, 0 ,255);
-//        public static final int DARK_GRAY = Utils.rgba(128, 128, 128, 255);
-//        public static final int LIGHT_GRAY = Utils.rgba(192, 192, 192, 255);
-//        public static final int ORANGE = Utils.rgba(255, 165, 0, 255);
-//        public static final int DARK_RED = Utils.rgba(64, 0, 0, 255);
-//        public static final int CERULEAN = Utils.rgba(16, 32, 75, 255);
-//        public static final int CREAM = Utils.rgba(255, 253, 208, 255);
-//        public static final int PERU = Utils.rgba(205, 133, 63, 255);
-//        public static final int CYAN = Utils.rgba(0, 255, 255, 255);
-//    }
 }

@@ -25,11 +25,11 @@ public class SurfaceHelper implements GlobalVars {
         GL11.glPopMatrix();
     }
 
-    public void drawTextShadowCentered(String text, float  x, float y, int color) {
-        float offsetX = getFontWidth(text) / 2F;
-        float offsetY = getFontHeight() / 2F;
-        minecraft.fontRendererObj.drawStringWithShadow(text, x - offsetX, y - offsetY, color);
-    }
+//    public void drawTextShadowCentered(String text, float  x, float y, int color) {
+//        float offsetX = getFontWidth(text) / 2F;
+//        float offsetY = getFontHeight() / 2F;
+//        minecraft.fontRendererObj.drawStringWithShadow(text, x - offsetX, y - offsetY, color);
+//    }
 
     public void drawText(String text, int x, int y, int color, double scale, boolean shadow) {
         GlStateManager.pushMatrix();
@@ -40,20 +40,20 @@ public class SurfaceHelper implements GlobalVars {
         GlStateManager.popMatrix();
     }
 
-    public void drawText(String text, int x, int y, int color, double scale) {
-        drawText(text, x, y, color, scale, false);
-    }
-
-    public void drawTextWithShadow(String text, int x, int y, int color, double scale) {
-        drawText(text, x, y, color, scale, true);
-    }
-
-    public void drawOutlinedRectShaded(int x, int y, int w, int h, int outlineColor, int shadeColor, int shade, float width) {
-        int shaded = (0x00FFFF & shade) | ((shade & 255) << 24);
-
-        drawRect(x, y, w, h, shaded);
-        drawOutlinedRect(x, y, w, h, outlineColor, width);
-    }
+//    public void drawText(String text, int x, int y, int color, double scale) {
+//        drawText(text, x, y, color, scale, false);
+//    }
+//
+//    public void drawTextWithShadow(String text, int x, int y, int color, double scale) {
+//        drawText(text, x, y, color, scale, true);
+//    }
+//
+//    public void drawOutlinedRectShaded(int x, int y, int w, int h, int outlineColor, int shadeColor, int shade, float width) {
+//        int shaded = (0x00FFFF & shade) | ((shade & 255) << 24);
+//
+//        drawRect(x, y, w, h, shaded);
+//        drawOutlinedRect(x, y, w, h, outlineColor, width);
+//    }
 
     public void drawOutlinedRectFilled(int x, int y, int w, int h, int outlineColor, int fillColor, float width) {
         drawRect(x, y, w, h, fillColor);
@@ -82,10 +82,10 @@ public class SurfaceHelper implements GlobalVars {
         GL11.glLineWidth(width);
 
         renderer.begin(GL11.GL_LINE_LOOP, DefaultVertexFormats.POSITION);
-        renderer.pos((double) x, (double) y, 0.0D).endVertex();
-        renderer.pos((double) x, (double) y + h, 0.0D).endVertex();
+        renderer.pos(x, y, 0.0D).endVertex();
+        renderer.pos( x, (double) y + h, 0.0D).endVertex();
         renderer.pos((double) x + w, (double) y + h, 0.0D).endVertex();
-        renderer.pos((double) x + w, (double) y, 0.0D).endVertex();
+        renderer.pos((double) x + w, y, 0.0D).endVertex();
         tessellator.draw();
 
         GlStateManager.enableTexture2D();
@@ -93,19 +93,19 @@ public class SurfaceHelper implements GlobalVars {
         GlStateManager.popMatrix();
     }
 
-    public int getFontHeight() {
-        return minecraft.fontRendererObj.FONT_HEIGHT;
-    }
+//    public int getFontHeight() {
+//        return minecraft.fontRendererObj.FONT_HEIGHT;
+//    }
 
-    public int getScaledFontHeight(double scale) {
-        return (int) (minecraft.fontRendererObj.FONT_HEIGHT * scale);
-    }
+//    public int getScaledFontHeight(double scale) {
+//        return (int) (minecraft.fontRendererObj.FONT_HEIGHT * scale);
+//    }
 
     public int getScaledFontWidth(String text, double scale) {
         return (int) (minecraft.fontRendererObj.getStringWidth(text) * scale);
     }
 
-    public int getFontWidth(String text) {
-        return (int) (minecraft.fontRendererObj.getStringWidth(text));
-    }
+//    public int getFontWidth(String text) {
+//        return (int) (minecraft.fontRendererObj.getStringWidth(text));
+//    }
 }
