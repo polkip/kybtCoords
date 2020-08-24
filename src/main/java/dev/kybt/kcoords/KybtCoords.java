@@ -10,21 +10,21 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 @Mod(name = "kybtCoords", modid = "kcoords", version = "2.3")
 public class KybtCoords {
 
-    public static boolean isEnabled; // = true
+    public static boolean isEnabled = true;
 
-    public static int positionX; // = 0
-    public static int positionY; // = 0
+    public static int positionX = 0;
+    public static int positionY = 0;
 
-    public static double scale; // = 1.0
+    public static double scale = 1.0;
 
-    public static boolean coloredBiomes; // = true
-    public static boolean showFPS; // = true
-    public static boolean showC; // = true
-    public static boolean showBiomes; // = true
+    public static boolean coloredBiomes = true;
+    public static boolean showFPS = true;
+    public static boolean showC = true;
+    public static boolean showBiomes = true;
 //    public static boolean showCoordinates = true;
 
-    public static int keyColor; // = Utils.rgba(92, 144, 228, 255)
-    public static int textColor; // = Utils.WHITE
+    public static int keyColor = Utils.rgba(92, 144, 228, 255);
+    public static int textColor = Utils.WHITE;
 
     public static int backgroundColor = Utils.rgba(0, 0, 0, 127);
 
