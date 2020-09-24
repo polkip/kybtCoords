@@ -7,7 +7,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
-@Mod(name = "kybtCoords", modid = "kcoords", version = "2.3")
+@Mod(name = "kybtCoords", modid = "kcoords", version = "2.4")
 public class KybtCoords {
 
     public static boolean isEnabled = true;

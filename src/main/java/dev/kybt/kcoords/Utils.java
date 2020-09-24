@@ -2,7 +2,6 @@ package dev.kybt.kcoords;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.chunk.Chunk;
@@ -12,15 +11,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Collections;
 
 public class Utils implements GlobalVars {
 
     public static final String[] DIRECTIONS = {"N", "NE", "E", "SE", "S", "SW", "W", "NW"};
     public static final int WHITE = rgba(255, 255, 255, 255);
     private static final File SAVE_FILE = new File(minecraft.mcDataDir.getParent(), "kybtCoords.config");
-//    private static final File TEST_FILE = new File(minecraft.mcDataDir.getParent() + "\\mods\\kybtCoords", "kybtCoords.config");
     private static JsonObject configData = new JsonObject();
 
     public static int rgba(int r, int g, int b, int a) {
@@ -29,11 +25,19 @@ public class Utils implements GlobalVars {
 
     public static int[] toRGBA(int buffer) {
         return new int[] {
-                (buffer >> 16 & 255), (buffer >> 8 & 255), (buffer & 255), (buffer >> 24 & 255)
+                (buffer >> 16 & 0xFF), (buffer >> 8 & 0xFF), (buffer & 0xFF), (buffer >> 24 & 0xFF)
         };
     }
 
-    // Credit to boomboompower
+    public static byte[] toRGBAByte(int buffer) {
+        return new byte[] {
+                ((byte) (buffer >> 16 & 0xFF)),
+                ((byte) (buffer >> 8 & 0xFF)),
+                ((byte) (buffer & 0xFF)),
+                ((byte) (buffer >> 24 & 0xFF))
+        };
+    }
+
     public static int getDirection() {
         double direction = MathHelper.wrapAngleTo180_float(minecraft.thePlayer.rotationYaw) + 180.0D;
 
@@ -77,10 +81,8 @@ public class Utils implements GlobalVars {
 
     public static void saveSettings() {
         configData = new JsonObject();
-//        LOGGER.info("Save file path1: " + Paths.get(SAVE_FILE.getPath()));
         try {
             SAVE_FILE.createNewFile();
-//            LOGGER.info("Save file path2: " + Paths.get(SAVE_FILE.getPath()));
             FileWriter writer = new FileWriter(SAVE_FILE);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
@@ -91,6 +93,7 @@ public class Utils implements GlobalVars {
             configData.addProperty("showBiomes", KybtCoords.showBiomes);
             configData.addProperty("showC", KybtCoords.showC);
             configData.addProperty("showFPS", KybtCoords.showFPS);
+            configData.addProperty("scale", KybtCoords.scale);
             configData.addProperty("keyColor", KybtCoords.keyColor);
             configData.addProperty("textColor", KybtCoords.textColor);
             configData.addProperty("backgroundColor", KybtCoords.backgroundColor);
@@ -128,6 +131,7 @@ public class Utils implements GlobalVars {
             KybtCoords.keyColor = configData.has("keyColor") ? configData.get("keyColor").getAsInt() :  rgba(92, 144, 228, 255);
             KybtCoords.textColor = configData.has("textColor") ? configData.get("textColor").getAsInt() : WHITE;
             KybtCoords.backgroundColor = configData.has("backgroundColor") ? configData.get("backgroundColor").getAsInt() : rgba(0, 0, 0, 127);
+            KybtCoords.scale = configData.has("scale") ? configData.get("scale").getAsDouble() : 1.0D;
             KybtCoords.isEnabled = configData.has("isEnabled") && configData.get("isEnabled").getAsBoolean();
             KybtCoords.showFPS = configData.has("showFPS") && configData.get("showFPS").getAsBoolean();
             KybtCoords.showC = configData.has("showC") && configData.get("showC").getAsBoolean();
@@ -137,6 +141,42 @@ public class Utils implements GlobalVars {
         } else {
             LOGGER.info("Couldn't find a save file, attempting to save.");
             saveSettings();
+        }
+    }
+
+    public static int parseHexadecimal(String hex) {
+        char[] rawHex = hex.toCharArray();
+
+        if(rawHex[0] != '#' || rawHex.length < 7 || rawHex.length > 9) return -1;
+
+        int r = (checkChar(rawHex[1]) * 16) + checkChar(rawHex[2]);
+        int g = (checkChar(rawHex[3]) * 16) + checkChar(rawHex[4]);
+        int b = (checkChar(rawHex[5]) * 16) + checkChar(rawHex[6]);
+        int a = rawHex.length == 7 ? 255 : (checkChar(rawHex[7]) * 16) + checkChar(rawHex[8]);
+
+        return rgba(r & 0xFF, g & 0xFF, b & 0xFF, a & 0xFF);
+    }
+
+    private static int checkChar(char c) {
+        if(c >= '1' && c <= '9') return Integer.parseInt(String.valueOf(c));
+        else {
+            switch(c) {
+                case 'A' & 'a':
+                    return 10;
+                case 'B' & 'b':
+                    return 11;
+                case 'C' & 'c':
+                    return 12;
+                case 'D' | 'd':
+                    return 13;
+                case 'E' | 'e':
+                    return 14;
+                case 'F' | 'f':
+                    return 15;
+
+                default:
+                    return 0;
+            }
         }
     }
 }

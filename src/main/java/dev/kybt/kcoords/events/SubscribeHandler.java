@@ -45,9 +45,6 @@ public class SubscribeHandler implements GlobalVars {
                 minecraft.getRenderViewEntity().getEntityBoundingBox().minY,
                 minecraft.getRenderViewEntity().posZ);
 
-//        GlStateManager.pushMatrix();
-//        GlStateManager.translate(0.0F, 0.0F, 1.0F);
-
         surfaceHelper.drawRect(KybtCoords.positionX, KybtCoords.positionY,
                 boxWidth, boxHeight, KybtCoords.backgroundColor);
 
@@ -55,61 +52,57 @@ public class SubscribeHandler implements GlobalVars {
         width = 100;
 
         // Render X coordinate and direction
-        surfaceHelper.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+        surfaceHelper.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
         surfaceHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posX, 2),
-                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("X: ", scale), line, KybtCoords.textColor, scale, true);
-        surfaceHelper.drawText(xDirection, KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(xDirection, scale), line,
-                KybtCoords.textColor, scale, true);
+                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("X: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+        surfaceHelper.drawText(xDirection, KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(xDirection, KybtCoords.scale), line,
+                KybtCoords.textColor, KybtCoords.scale, true);
 
         line += 10;
 
         // Render Y coordinate and direction
-        surfaceHelper.drawText("Y: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+        surfaceHelper.drawText("Y: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
         surfaceHelper.drawText("" + (int) Math.round(minecraft.thePlayer.posY),
-                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("Y: ", scale), line, KybtCoords.textColor, scale, true);
+                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("Y: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
         surfaceHelper.drawText(Utils.DIRECTIONS[Utils.getDirection()],
-                KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], scale), line,
-                KybtCoords.keyColor, scale, true);
+                KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(Utils.DIRECTIONS[Utils.getDirection()], KybtCoords.scale), line,
+                KybtCoords.keyColor, KybtCoords.scale, true);
 
         line += 10;
 
         // Render Z coordinate and direction
-        surfaceHelper.drawText("Z: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+        surfaceHelper.drawText("Z: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
         surfaceHelper.drawText("" + Utils.roundDouble(minecraft.thePlayer.posZ, 2),
-                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("Z: ", scale), line, KybtCoords.textColor, scale, true);
-        surfaceHelper.drawText(zDirection, KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(zDirection, scale), line,
-                KybtCoords.textColor, scale, true);
+                KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("Z: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+        surfaceHelper.drawText(zDirection, KybtCoords.positionX + 99 - surfaceHelper.getScaledFontWidth(zDirection, KybtCoords.scale), line,
+                KybtCoords.textColor, KybtCoords.scale, true);
 
         line += 10;
 
         // Render C counter if enabled
         if(KybtCoords.showC) {
-            surfaceHelper.drawText("C: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+            surfaceHelper.drawText("C: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
             surfaceHelper.drawText("" + Utils.fetchCCounter(),
-                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("C: ", scale), line, KybtCoords.textColor, scale, true);
+                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("C: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
             line += 10;
         }
 
         // Render biome if enabled
         if(KybtCoords.showBiomes) {
-            surfaceHelper.drawText("B: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+            surfaceHelper.drawText("B: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
             surfaceHelper.drawText("" + Utils.fetchBiomeName(playerLocation),
-                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("B: ", scale), line, Utils.fetchBiomeColor(playerLocation), scale, true);
+                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("B: ", KybtCoords.scale), line, Utils.fetchBiomeColor(playerLocation), KybtCoords.scale, true);
             line += 10;
         }
 
         // Render FPS counter if enabled
         if(KybtCoords.showFPS) {
-            surfaceHelper.drawText("FPS: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, scale, true);
+            surfaceHelper.drawText("FPS: ", KybtCoords.positionX + 1, line, KybtCoords.keyColor, KybtCoords.scale, true);
             surfaceHelper.drawText("" + minecraft.debug.split(" ")[0],
-                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("FPS: ", scale), line, KybtCoords.textColor, scale, true);
+                    KybtCoords.positionX + 1 + surfaceHelper.getScaledFontWidth("FPS: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
             line += 10;
         }
 
-//        GlStateManager.popMatrix();
-
-//        int width = KybtCoords.positionX + 100;
-//        int height = KybtCoords.positionY + line;
         bottom = KybtCoords.positionY + boxHeight;
         height = boxHeight;
 
@@ -133,7 +126,6 @@ public class SubscribeHandler implements GlobalVars {
             KybtCoords.positionY = 0;
     }
 
-    // FIXME: There's probably a more efficient way of doing this but it's 2:00AM and I can't be bothered to find one.
     private void updateDirections() {
         String direction = Utils.DIRECTIONS[Utils.getDirection()];
 

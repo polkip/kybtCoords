@@ -54,7 +54,7 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
         buttonList.add(buttonShowBiomes);
 
         sliderScale = new GuiSlider(4, (width / 2 - 60), (height / 2 + 26), 150, 20,
-                "Scale: ", "", 0.5, 1.0, KybtCoords.scale, true, true);
+                "Scale: ", "", 0.5D, 1.0D, KybtCoords.scale, true, true);
         buttonList.add(sliderScale);
 
         buttonKeyColorTest = new GuiButton(5, (width / 2 - 60), (height / 2 + 48), 150, 20,
