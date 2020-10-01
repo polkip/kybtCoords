@@ -3,9 +3,7 @@ package dev.kybt.kcoords.gui;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.events.SubscribeHandler;
-import dev.kybt.kcoords.render.SurfaceHelper;
-import javafx.scene.input.KeyCode;
+import dev.kybt.kcoords.events.Subscriber;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
@@ -16,12 +14,10 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class ColorGUI extends GuiScreen implements GlobalVars {
 
-    private final SubscribeHandler subscribe = new SubscribeHandler();
+    private final Subscriber subscribe = new Subscriber();
 //    private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
 
     private GuiTextField textFieldHex;
@@ -33,7 +29,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
 
     private GuiButton buttonSave;
 
-    private boolean changedHex = false;
+//    private boolean changedHex = false;
 
     private int currentColor = 0;
     private final int id;
@@ -144,11 +140,24 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     }
 
     private void updateHex() {
+        if(textFieldHex.getText().length() != 7 || textFieldHex.getText().length() != 9) {
+            textFieldHex.setTextColor(Utils.rgba(255, 0, 0, 255));
+            return;
+        } else
+            textFieldHex.setTextColor(Utils.WHITE);
+
         currentColor = Utils.parseHexadecimal(textFieldHex.getText());
         sliderRed.sliderValue = Utils.toRGBA(currentColor)[0];
         sliderGreen.sliderValue = Utils.toRGBA(currentColor)[1];
         sliderBlue.sliderValue = Utils.toRGBA(currentColor)[2];
         sliderAlpha.sliderValue = Utils.toRGBA(currentColor)[3];
+
+        // Debug
+        GlobalVars.LOGGER.debug("Decoded hex color: " + currentColor);
+        GlobalVars.LOGGER.debug("Slider red: " + sliderRed.sliderValue);
+        GlobalVars.LOGGER.debug("Slider green: " + sliderGreen.sliderValue);
+        GlobalVars.LOGGER.debug("Slider blue: " + sliderBlue.sliderValue);
+        GlobalVars.LOGGER.debug("Slider alpha: " + sliderAlpha.sliderValue);
 
         setColor();
     }

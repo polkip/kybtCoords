@@ -1,7 +1,7 @@
 package dev.kybt.kcoords;
 
 import dev.kybt.kcoords.commands.CommandKybtCoords;
-import dev.kybt.kcoords.events.SubscribeHandler;
+import dev.kybt.kcoords.events.Subscriber;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -34,7 +34,7 @@ public class KybtCoords {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new SubscribeHandler());
+        MinecraftForge.EVENT_BUS.register(new Subscriber());
         ClientCommandHandler.instance.registerCommand(new CommandKybtCoords());
         Utils.loadSettings();
         GlobalVars.LOGGER.info("Successfully initialized kybtCoords.");

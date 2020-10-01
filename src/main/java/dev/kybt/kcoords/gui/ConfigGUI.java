@@ -3,7 +3,7 @@ package dev.kybt.kcoords.gui;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.events.SubscribeHandler;
+import dev.kybt.kcoords.events.Subscriber;
 import dev.kybt.kcoords.render.SurfaceHelper;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public class ConfigGUI extends GuiScreen implements GlobalVars {
-    private final SubscribeHandler subscribe = new SubscribeHandler();
+    private final Subscriber subscribe = new Subscriber();
     private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
 //    private GuiButton buttonCoordsEnabled;
     private GuiButton buttonShowFPS;
@@ -23,9 +23,9 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
 
     private GuiSlider sliderScale;
 
-    private ColorButton buttonKeyColor;
-    private ColorButton buttonTextColor;
-    private ColorButton buttonBackgroundColor;
+//    private ColorButton buttonKeyColor;
+//    private ColorButton buttonTextColor;
+//    private ColorButton buttonBackgroundColor;
 
     private GuiButton buttonKeyColorTest;
     private GuiButton buttonTextColorTest;
@@ -54,8 +54,9 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
         buttonList.add(buttonShowBiomes);
 
         sliderScale = new GuiSlider(4, (width / 2 - 60), (height / 2 + 26), 150, 20,
-                "Scale: ", "", 0.5D, 1.0D, KybtCoords.scale, true, true);
+                "Scale: ", "", 0.50D, 1.50D, KybtCoords.scale, true, true);
         buttonList.add(sliderScale);
+        sliderScale.precision = 2;
 
         buttonKeyColorTest = new GuiButton(5, (width / 2 - 60), (height / 2 + 48), 150, 20,
                 "Key color");
@@ -106,8 +107,13 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         super.drawDefaultBackground();
         subscribe.renderData();
-        subscribe.updateRenders();
+        subscribe.restrictBox();
         super.drawScreen(mouseX, mouseY, partialTicks);
+    }
+
+    public void updateScreen() {
+        super.updateScreen();
+        KybtCoords.scale = sliderScale.getValue();
     }
 
     protected void actionPerformed(GuiButton button) {
@@ -125,7 +131,7 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
                 buttonShowBiomes.displayString = ("Biome: " + ((KybtCoords.showBiomes = !KybtCoords.showBiomes) ? "Enabled" : "Disabled"));
                 break;
             case 4:
-                sliderScale.displayString = ("Scale: " + (KybtCoords.scale = sliderScale.sliderValue));
+//                sliderScale.displayString = ("Scale: " + (KybtCoords.scale)); // (KybtCoords.scale = sliderScale.sliderValue)
                 break;
             case 5:
 //                minecraft.displayGuiScreen(null);

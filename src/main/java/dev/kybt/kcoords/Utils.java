@@ -147,13 +147,16 @@ public class Utils implements GlobalVars {
     public static int parseHexadecimal(String hex) {
         char[] rawHex = hex.toCharArray();
 
-        if(rawHex[0] != '#' || rawHex.length < 7 || rawHex.length > 9) return -1;
+        if(rawHex[0] != '#' || (rawHex.length < 7 || rawHex.length > 9)) return -1;
 
         int r = (checkChar(rawHex[1]) * 16) + checkChar(rawHex[2]);
         int g = (checkChar(rawHex[3]) * 16) + checkChar(rawHex[4]);
         int b = (checkChar(rawHex[5]) * 16) + checkChar(rawHex[6]);
         int a = rawHex.length == 7 ? 255 : (checkChar(rawHex[7]) * 16) + checkChar(rawHex[8]);
 
+        minecraft.thePlayer.sendChatMessage(String.format("Raw - r: %d, g: %d, b: %d, a: %d", r, g, b, a));
+        minecraft.thePlayer.sendChatMessage(String.format("Clamped - r: %d, g: %d, b: %d, a: %d",
+                (r & 0xFF), (g & 0xFF), (b & 0xFF), (a & 0xFF)));
         return rgba(r & 0xFF, g & 0xFF, b & 0xFF, a & 0xFF);
     }
 

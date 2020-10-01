@@ -3,7 +3,7 @@ package dev.kybt.kcoords.gui;
 import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.events.SubscribeHandler;
+import dev.kybt.kcoords.events.Subscriber;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,18 +16,18 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     private int lastX;
     private int lastY;
 
-    private final SubscribeHandler subscribe = new SubscribeHandler();
+    private final Subscriber subscribe = new Subscriber();
 
     public void display() {
-//        MinecraftForge.EVENT_BUS.register(this);
-        minecraft.displayGuiScreen(this);
+        MinecraftForge.EVENT_BUS.register(this);
+//        minecraft.displayGuiScreen(this);
     }
 
-//    @SubscribeEvent
-//    public void onTick(TickEvent.ClientTickEvent event) {
-//        MinecraftForge.EVENT_BUS.unregister(this);
-//        minecraft.displayGuiScreen(this);
-//    }
+    @SubscribeEvent
+    public void onTick(TickEvent.ClientTickEvent event) {
+        MinecraftForge.EVENT_BUS.unregister(this);
+        minecraft.displayGuiScreen(this);
+    }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -44,8 +44,8 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
         int minX = KybtCoords.positionX;
         int minY = KybtCoords.positionY;
-        int maxX = SubscribeHandler.right;
-        int maxY = SubscribeHandler.bottom;
+        int maxX = Subscriber.right;
+        int maxY = Subscriber.bottom;
 
         if((mouseX >= minX) && (mouseX <= maxX) && (mouseY >= minY) && (mouseY <= maxY)) {
             drag = true;
@@ -69,7 +69,7 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     @Override
     protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick) {
         if(drag) {
-            subscribe.updateRenders();
+            subscribe.restrictBox();
 
             KybtCoords.positionX += mouseX - lastX;
             KybtCoords.positionY += mouseY - lastY;
