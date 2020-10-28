@@ -1,0 +1,55 @@
+// Render X coordinate and direction
+        surfaceBuilder.drawText("X: ", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true); // KybtCoords.labelColor
+        surfaceBuilder.drawText("" + Utils.roundDouble(Utils.getPlayer().posX, 2),
+                KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("X: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+        surfaceBuilder.drawText(xDirection, KybtCoords.positionX + (int)(99 * KybtCoords.scale)
+                        - surfaceBuilder.getScaledFontWidth(xDirection, KybtCoords.scale), line,
+                KybtCoords.textColor, KybtCoords.scale, true);
+
+        line += (lineSpace * KybtCoords.scale);
+
+        // Render Y coordinate and direction
+        surfaceBuilder.drawText("Y: ", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true); // KybtCoords.labelColor
+        surfaceBuilder.drawText("" + (int) Math.round(Utils.getPlayer().posY),
+                KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("Y: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+        surfaceBuilder.drawText(direction, // Utils.CARDINAL_DIRECTIONS[Utils.getDirection()]
+                KybtCoords.positionX + (int)(99 * KybtCoords.scale)
+                        - surfaceBuilder.getScaledFontWidth(direction, KybtCoords.scale), line,
+                KybtCoords.labelColor, KybtCoords.scale, true);
+
+        line += (lineSpace * KybtCoords.scale);
+
+        // Render Z coordinate and direction
+        surfaceBuilder.drawText("Z: ", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true); // KybtCoords.labelColor
+        surfaceBuilder.drawText("" + Utils.roundDouble(Utils.getPlayer().posZ, 2),
+                KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("Z: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+        surfaceBuilder.drawText(zDirection, KybtCoords.positionX + (int)(99 * KybtCoords.scale)
+                        - surfaceBuilder.getScaledFontWidth(zDirection, KybtCoords.scale), line,
+                KybtCoords.textColor, KybtCoords.scale, true);
+
+        line += (lineSpace * KybtCoords.scale);
+
+        // Render C counter if enabled
+        if(KybtCoords.showC) {
+            surfaceBuilder.drawText("C: ", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true); // KybtCoords.labelColor
+            surfaceBuilder.drawText("" + Utils.fetchCCounter(),
+                    KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("C: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+            line += (lineSpace * KybtCoords.scale);
+        }
+
+        // Render biome if enabled
+        if(KybtCoords.showBiomes) {
+            surfaceBuilder.drawText("B: ", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true); // KybtCoords.labelColor
+            surfaceBuilder.drawText("" + Utils.fetchBiomeName(playerLocation),
+                    KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("B: ", KybtCoords.scale), line, Utils.fetchBiomeColor(playerLocation), KybtCoords.scale, true);
+            line += (lineSpace * KybtCoords.scale);
+        }
+
+        // Render FPS counter if enabled
+        if(KybtCoords.showFPS) {
+            surfaceBuilder.drawText("FPS: " +
+                    "", KybtCoords.positionX + 1, line, KybtCoords.labelColor, KybtCoords.scale, true);
+            surfaceBuilder.drawText("" + Utils.getMinecraft().debug.split(" ")[0],
+                    KybtCoords.positionX + 1 + surfaceBuilder.getScaledFontWidth("FPS: ", KybtCoords.scale), line, KybtCoords.textColor, KybtCoords.scale, true);
+            line += (lineSpace * KybtCoords.scale);
+        }

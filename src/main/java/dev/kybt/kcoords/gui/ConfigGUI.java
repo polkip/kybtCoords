@@ -1,10 +1,9 @@
 package dev.kybt.kcoords.gui;
 
-import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.events.Subscriber;
-import dev.kybt.kcoords.render.SurfaceHelper;
+import dev.kybt.kcoords.render.SurfaceBuilder;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,9 +11,9 @@ import net.minecraftforge.fml.client.config.GuiSlider;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public class ConfigGUI extends GuiScreen implements GlobalVars {
+public class ConfigGUI extends GuiScreen {
     private final Subscriber subscribe = new Subscriber();
-    private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
+    private final SurfaceBuilder surfaceBuilder = SurfaceBuilder.getInstance();
 //    private GuiButton buttonCoordsEnabled;
     private GuiButton buttonShowFPS;
     private GuiButton buttonColoredBiomes;
@@ -27,9 +26,9 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
 //    private ColorButton buttonTextColor;
 //    private ColorButton buttonBackgroundColor;
 
-    private GuiButton buttonKeyColorTest;
-    private GuiButton buttonTextColorTest;
-    private GuiButton buttonBackgroundColorTest;
+    private GuiButton buttonLabelColor;
+    private GuiButton buttonTextColor;
+    private GuiButton buttonBackgroundColor;
 //    private GuiButton buttonColors;
 
 //    private GuiTextField fieldKeyColor;
@@ -58,23 +57,23 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
         buttonList.add(sliderScale);
         sliderScale.precision = 2;
 
-        buttonKeyColorTest = new GuiButton(5, (width / 2 - 60), (height / 2 + 48), 150, 20,
-                "Key color");
-        surfaceHelper.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 48), 20, 20, Utils.WHITE,
-                KybtCoords.keyColor, 1);
-        buttonList.add(buttonKeyColorTest);
+        buttonLabelColor = new GuiButton(5, (width / 2 - 60), (height / 2 + 48), 150, 20,
+                "Label color");
+        surfaceBuilder.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 48), 20, 20, Utils.WHITE,
+                KybtCoords.labelColor, 1);
+        buttonList.add(buttonLabelColor);
 
-        buttonTextColorTest = new GuiButton(6, (width / 2 - 60), (height / 2 + 69), 150, 20,
+        buttonTextColor = new GuiButton(6, (width / 2 - 60), (height / 2 + 69), 150, 20,
                 "Text color");
-        surfaceHelper.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 69), 20, 20, Utils.WHITE,
+        surfaceBuilder.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 69), 20, 20, Utils.WHITE,
                 KybtCoords.textColor, 1);
-        buttonList.add(buttonTextColorTest);
+        buttonList.add(buttonTextColor);
 
-        buttonBackgroundColorTest = new GuiButton(7, (width / 2 - 60), (height / 2 + 90), 150, 20,
+        buttonBackgroundColor = new GuiButton(7, (width / 2 - 60), (height / 2 + 90), 150, 20,
                 "Background color");
-        surfaceHelper.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 90), 20, 20, Utils.WHITE,
+        surfaceBuilder.drawOutlinedRectFilled((width / 2 - 60) + 2, (height / 2 + 90), 20, 20, Utils.WHITE,
                 KybtCoords.backgroundColor, 1);
-        buttonList.add(buttonBackgroundColorTest);
+        buttonList.add(buttonBackgroundColor);
 
 
 //        surfaceHelper.drawText("Key color: ", (width / 2 - 60) - surfaceHelper.getFontWidth("Key color: "), (height / 2 + 48), Utils.WHITE, 1.0, true);
@@ -100,7 +99,7 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         MinecraftForge.EVENT_BUS.unregister(this);
-        minecraft.displayGuiScreen(this);
+        Utils.getMinecraft().displayGuiScreen(this);
     }
 
     @Override
@@ -149,8 +148,8 @@ public class ConfigGUI extends GuiScreen implements GlobalVars {
     }
 
     @Override
-    public void setGuiSize(int w, int h) {
-        super.setGuiSize(w, h);
+    public void func_183500_a(int width, int height) {  // setGuiSize();
+        super.func_183500_a(width, height);
     }
 
     @Override

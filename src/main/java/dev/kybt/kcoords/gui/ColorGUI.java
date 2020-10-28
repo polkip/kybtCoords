@@ -1,6 +1,5 @@
 package dev.kybt.kcoords.gui;
 
-import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.events.Subscriber;
@@ -15,7 +14,7 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
 
-public class ColorGUI extends GuiScreen implements GlobalVars {
+public class ColorGUI extends GuiScreen {
 
     private final Subscriber subscribe = new Subscriber();
 //    private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
@@ -38,7 +37,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
         this.id = id;
         switch(id) {
             case 0:
-                currentColor = KybtCoords.keyColor;
+                currentColor = KybtCoords.labelColor;
                 break;
             case 1:
                 currentColor = KybtCoords.textColor;
@@ -56,7 +55,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         MinecraftForge.EVENT_BUS.unregister(this);
-        minecraft.displayGuiScreen(this);
+        Utils.getMinecraft().displayGuiScreen(this);
     }
 
     @Override
@@ -84,16 +83,15 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
         textFieldHex.textboxKeyTyped(typedChar, keyCode);
-        updateHex();
+//        updateHex();
     }
 
     @Override
     public void initGui() {
-        textFieldHex = new GuiTextField(0, minecraft.fontRendererObj,
+        textFieldHex = new GuiTextField(0, Utils.getMinecraft().fontRendererObj,
                 (width / 2 - 60), (height / 2 - 92), 150, 20);
         textFieldHex.setMaxStringLength(9);
         textFieldHex.setText("#" + Hex.encodeHexString(Utils.toRGBAByte(currentColor)));
-
 
         sliderRed = new GuiSlider(1, (width / 2 - 60), (height / 2 - 70), 150, 20,
                 "Red: ", "", 0, 255, Utils.toRGBA(currentColor)[0], false, true);
@@ -140,24 +138,28 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     }
 
     private void updateHex() {
-        if(textFieldHex.getText().length() != 7 || textFieldHex.getText().length() != 9) {
+        if(Utils.invalid) {
             textFieldHex.setTextColor(Utils.rgba(255, 0, 0, 255));
             return;
         } else
             textFieldHex.setTextColor(Utils.WHITE);
 
-        currentColor = Utils.parseHexadecimal(textFieldHex.getText());
-        sliderRed.sliderValue = Utils.toRGBA(currentColor)[0];
-        sliderGreen.sliderValue = Utils.toRGBA(currentColor)[1];
-        sliderBlue.sliderValue = Utils.toRGBA(currentColor)[2];
-        sliderAlpha.sliderValue = Utils.toRGBA(currentColor)[3];
+        byte[] hex;
+        if((hex = Utils.parseHexadecimal(textFieldHex.getText())) != null) {
+            currentColor = Utils.rgbaByte(hex);
+        } else return;
+//        currentColor = Utils.rgbaByte(Utils.parseHexadecimal(textFieldHex.getText()));
+        sliderRed.sliderValue = hex[0]; // Utils.toRGBA(currentColor)[0]
+        sliderGreen.sliderValue = hex[1]; // Utils.toRGBA(currentColor)[1]
+        sliderBlue.sliderValue = hex[2]; // Utils.toRGBA(currentColor)[2]
+        sliderAlpha.sliderValue = hex[3]; // Utils.toRGBA(currentColor)[3]
 
         // Debug
-        GlobalVars.LOGGER.debug("Decoded hex color: " + currentColor);
-        GlobalVars.LOGGER.debug("Slider red: " + sliderRed.sliderValue);
-        GlobalVars.LOGGER.debug("Slider green: " + sliderGreen.sliderValue);
-        GlobalVars.LOGGER.debug("Slider blue: " + sliderBlue.sliderValue);
-        GlobalVars.LOGGER.debug("Slider alpha: " + sliderAlpha.sliderValue);
+        Utils.getLogger().debug("Decoded hex color: " + currentColor);
+        Utils.getLogger().debug("Slider red: " + sliderRed.sliderValue);
+        Utils.getLogger().debug("Slider green: " + sliderGreen.sliderValue);
+        Utils.getLogger().debug("Slider blue: " + sliderBlue.sliderValue);
+        Utils.getLogger().debug("Slider alpha: " + sliderAlpha.sliderValue);
 
         setColor();
     }
@@ -165,7 +167,7 @@ public class ColorGUI extends GuiScreen implements GlobalVars {
     private void setColor() {
         switch(id) {
             case 0:
-                KybtCoords.keyColor = currentColor;
+                KybtCoords.labelColor = currentColor;
                 break;
             case 1:
                 KybtCoords.textColor = currentColor;

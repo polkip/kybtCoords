@@ -1,6 +1,6 @@
 package dev.kybt.kcoords.render;
 
-import dev.kybt.kcoords.GlobalVars;
+import dev.kybt.kcoords.Utils;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -8,13 +8,17 @@ import net.minecraft.client.renderer.WorldRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import org.lwjgl.opengl.GL11;
 
-public class SurfaceHelper implements GlobalVars {
+import java.awt.*;
 
-    private static final SurfaceHelper INSTANCE = new SurfaceHelper();
+public class SurfaceBuilder {
 
-    private SurfaceHelper() {}
+    private static final SurfaceBuilder INSTANCE = new SurfaceBuilder();
+//    private static float hue = 0.0f;
+//    private int iter = 0;
 
-    public static SurfaceHelper getInstance() {
+    private SurfaceBuilder() {}
+
+    public static SurfaceBuilder getInstance() {
         return INSTANCE;
     }
 
@@ -25,14 +29,14 @@ public class SurfaceHelper implements GlobalVars {
         GL11.glPopMatrix();
     }
 
-    public void drawRect(int x, int y, int w, int h, int color, double scale) {
-        GL11.glPushMatrix();
-        GL11.glLineWidth(1.0F);
-        GL11.glScaled(scale, scale, scale);
-        Gui.drawRect((int) (x *  scale), (int) (y * scale),
-                (int) ((x + w) * scale), (int) ((y + h) * scale), color);
-        GL11.glPopMatrix();
-    }
+//    public void drawRect(int x, int y, int w, int h, int color, double scale) {
+//        GL11.glPushMatrix();
+//        GL11.glLineWidth(1.0F);
+//        GL11.glScaled(scale, scale, scale);
+//        Gui.drawRect((int) (x *  scale), (int) (y * scale),
+//                (int) ((x + w) * scale), (int) ((y + h) * scale), color);
+//        GL11.glPopMatrix();
+//    }
 
 //    public void drawRect(int left, int right, int bottom, int top, int color, double scale) {
 //        int j;
@@ -100,19 +104,43 @@ public class SurfaceHelper implements GlobalVars {
         GlStateManager.pushMatrix();
         GlStateManager.disableDepth();
         GlStateManager.scale(scale, scale, scale);
-        minecraft.fontRendererObj.drawString(text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color, shadow);
+        Utils.getMinecraft().fontRendererObj.drawString(text, (int) (x * (1 / scale)), (int) (y * (1 / scale)), color, shadow);
         GlStateManager.enableDepth();
         GlStateManager.popMatrix();
     }
 
-    public void drawTextTest(String text, int x, int y, int color, double scale, boolean shadow) {
-        GlStateManager.pushMatrix();
-        GlStateManager.disableDepth();
-        GlStateManager.scale(scale, scale, scale);
-        minecraft.fontRendererObj.drawString(text, (float) (x * (1 / scale)), (float) (y * (1 / scale)), color, shadow);
-        GlStateManager.enableDepth();
-        GlStateManager.popMatrix();
+    public void drawRainbowText(String text, int x, int y, double scale, boolean shadow) {
+        char[] textC = text.toCharArray();
+        int width = x;
+
+        for(char c : textC) {
+//            int color = Color.HSBtoRGB(((hue - (width * 0.01f) - (y * 0.01f)) % 2) / 2, 1.0f, 1.0f);
+            int color = Color.HSBtoRGB((float) ((System.currentTimeMillis() - (x * 10) - (y * 10)) % 2000) / 2000.0f, 1.0f, 1.0f);
+            drawText(String.valueOf(c), width, y, color, scale, shadow);
+            width += getScaledFontWidth(String.valueOf(c), scale);
+//            if(hue >= 359.0f)
+//                hue = 0.0f;
+//            hue += 0.0005;
+        }
     }
+
+//    public void drawRainbowText(String text, int x, int y, double scale, boolean shadow) {
+//        char[] textC = text.toCharArray();
+//        int i = 0, x2 = x;
+//
+//        for(char c : textC) {
+//            int color = 0xFF000000 |
+//                    ((int)(Math.tan(frequency * i + 0) * 127 + 128) << 16) | // * 127 + 128
+//                    ((int)(Math.tan(frequency * i + 2) * 127 + 128) << 8) | // * 127 + 128
+//                    ((int)(Math.tan(frequency * i + 4) * 127 + 128)); // * 127 + 128
+//            drawText(String.valueOf(c), x2, y, color, scale, shadow);
+//            x2 += getScaledFontWidth(String.valueOf(c), scale);
+//            if(frequency >= 3.0f)
+//                frequency = 0;
+//            frequency += 0.001f;
+//            i++;
+//        }
+//    }
 
 //    public void drawText(String text, int x, int y, int color, double scale) {
 //        drawText(text, x, y, color, scale, false);
@@ -171,12 +199,12 @@ public class SurfaceHelper implements GlobalVars {
 //        return minecraft.fontRendererObj.FONT_HEIGHT;
 //    }
 
-    public int getScaledFontHeight(double scale) {
-        return (int) (minecraft.fontRendererObj.FONT_HEIGHT * scale);
-    }
+//    public int getScaledFontHeight(double scale) {
+//        return (int) (Utils.getMinecraft().fontRendererObj.FONT_HEIGHT * scale);
+//    }
 
     public int getScaledFontWidth(String text, double scale) {
-        return (int) (minecraft.fontRendererObj.getStringWidth(text) * scale);
+        return (int) (Utils.getMinecraft().fontRendererObj.getStringWidth(text) * scale);
     }
 
 //    public int getFontWidth(String text) {

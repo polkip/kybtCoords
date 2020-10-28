@@ -2,15 +2,15 @@ package dev.kybt.kcoords.gui;
 
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
-import dev.kybt.kcoords.render.SurfaceHelper;
+import dev.kybt.kcoords.render.SurfaceBuilder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.GuiButton;
 
-// TODO: Implement this in a future version
+@Deprecated
 public class ColorButton extends GuiButton {
 
-    private final SurfaceHelper surfaceHelper = SurfaceHelper.getInstance();
+    private final SurfaceBuilder surfaceBuilder = SurfaceBuilder.getInstance();
 
     private int color;
     public int colorID;
@@ -25,7 +25,7 @@ public class ColorButton extends GuiButton {
 
         switch(colorID) {
             case 0:
-                this.color = KybtCoords.keyColor;
+                this.color = KybtCoords.labelColor;
                 break;
             case 1:
                 this.color = KybtCoords.textColor;
@@ -43,7 +43,7 @@ public class ColorButton extends GuiButton {
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
-        surfaceHelper.drawOutlinedRectFilled(xPosition, yPosition, w, h, Utils.WHITE, color, 1);
+        surfaceBuilder.drawOutlinedRectFilled(xPosition, yPosition, w, h, Utils.WHITE, color, 1);
 //        surfaceHelper.drawRect(this.xPosition, this.yPosition, w, h, Utils.WHITE);
 //        surfaceHelper.drawRect(xPosition, yPosition, (w - 1), (h - 1), color);
     }

@@ -1,6 +1,5 @@
 package dev.kybt.kcoords.gui;
 
-import dev.kybt.kcoords.GlobalVars;
 import dev.kybt.kcoords.KybtCoords;
 import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.events.Subscriber;
@@ -11,7 +10,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.io.IOException;
 
-public class PositionGUI extends GuiScreen implements GlobalVars {
+public class PositionGUI extends GuiScreen {
     private boolean drag = false;
     private int lastX;
     private int lastY;
@@ -26,7 +25,7 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent event) {
         MinecraftForge.EVENT_BUS.unregister(this);
-        minecraft.displayGuiScreen(this);
+        Utils.getMinecraft().displayGuiScreen(this);
     }
 
     @Override
@@ -37,7 +36,7 @@ public class PositionGUI extends GuiScreen implements GlobalVars {
     }
 
     protected void keyTyped(char c, int key) {
-        if(key == 1) minecraft.displayGuiScreen(null);
+        if(key == 1) Utils.getMinecraft().displayGuiScreen(null);
     }
 
     @Override

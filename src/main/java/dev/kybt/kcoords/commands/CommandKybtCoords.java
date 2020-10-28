@@ -1,6 +1,7 @@
 package dev.kybt.kcoords.commands;
 
 import dev.kybt.kcoords.KybtCoords;
+import dev.kybt.kcoords.Utils;
 import dev.kybt.kcoords.gui.ConfigGUI;
 import dev.kybt.kcoords.gui.PositionGUI;
 import net.minecraft.command.CommandException;
@@ -29,7 +30,7 @@ public class CommandKybtCoords implements ICommand {
 
     @Override
     public String getCommandUsage(ICommandSender iCommandSender) {
-        return "/kybtcoords <toggle:config>";
+        return "/kybtcoords <toggle:config:position>";
     }
 
     @Override
@@ -46,7 +47,11 @@ public class CommandKybtCoords implements ICommand {
                 new ConfigGUI().display();
             } else if(args[0].equalsIgnoreCase("position")) {
                 new PositionGUI().display();
+            } else {
+                Utils.getPlayer().sendChatMessage("Invalid usage: " + getCommandUsage(sender));
             }
+        } else {
+            Utils.getPlayer().sendChatMessage("Invalid usage: " + getCommandUsage(sender));
         }
     }
 
